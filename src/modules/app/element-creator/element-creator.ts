@@ -1,4 +1,4 @@
-import { Callback, ClassesArr, ElementParams } from '../../types';
+import { ButtonTypeValue, Callback, ClassesArr, ElementParams } from '../../types';
 
 export default class ElementCreator {
   private element: HTMLElement;
@@ -33,7 +33,7 @@ export default class ElementCreator {
     }
   }
 
-  public setDataType(value: string): void {
+  public setDataType(value: ButtonTypeValue): void {
     this.element.dataset.type = value;
   }
 
