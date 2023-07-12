@@ -4,105 +4,152 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="img/sushi-1.svg" type="image/svg+xml">
-  <title>RS-CSS-SELECTORS</title>
+  <title>ASYNC-RACE</title>
 </head>
 <body class="app">
-  <main class="main">
-    <header class="header">
-      <h1 class="logo" href="#">
-        <a class="logo__a" href="#">
-          <img class="logo__img" src="img/sushi-1.svg" alt="">
-          RS-CSS-Selectors
-        </a>
-      </h1>
-      <h2 class="header__rule">Select the plates</h2>
-    </header>
-    <div class="viewer"></div>
-    <div class="editor">
-      <div class="code">
-        <div class="code__header">
-          <h3 class="code__name">CSS</h3>
-          <h4 class="code__filename">style.css</h4>
-        </div>
-        <div class="code__window">
-          <div class="code__numbers">
-            1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20
-          </div>
-          <input class="code__input" type="text" placeholder="Type in a CSS selector">
-          <button class="code__button">Enter</button>
-        </div>
-      </div>
-      <div class="layout">
-        <div class="layout__header">
-          <h3 class="layout__name">HTML</h3>
-          <h4 class="layout__filename">table.html</h4>
-        </div>
-      </div>
-    </div>
-    <footer class="footer">
-      <a href="#">Github</a>
-      <a href="#">Design</a>
-      <div>2023</div>
-      <a href="#">RS-Shool</a>
-    </footer>
-  </main>
-  <aside class="aside">
-    <div class="aside-header">
-      <h2>Level 1 of 32</h2>
-      <div class="pagination">
-        <button class="pagination__prev">prev</button>
-        <button class="pagination__next">next</button>
-      </div>
-      <button class="level-menu">Menu</button>
-    </div>
-    <div class="aisde-main">
-      <h3 class="aside-main__header">Type Selector</h3>
-      <h4 class="aside-main__header">Select elements by their type</h4>
-      <p class="aside-main__syntax">A</p>
-      <p class="aside-main__text">
-        Selects all elements of type 
-        <span>A</span>. Type refers to the type of tag, so <span>div</span>, <span>p</span> and <span>ul</span> are all different element types.
-      </p>
-      <h4 class="aside-main__exaples">Examples</h4>
-      <ul class="examples">
-        <li><span>div</span> select all <span>div</span> elements.</li>
-        <li><span>p</span> select all <span>p</span> elements.</li>
-      </ul>
-    </div>
-    <nav class="levels-wrapper">
-      <h2 class="levels-wrapper__header">Choose a level</h2>
-      <ul class="levels">
-        <li>
-          <span>1</span><span>A</span>
-        </li>
-        <li>
-          <span>2</span><span>A</span>
-        </li>
-        <li>
-          <span>3</span><span>#id</span>
-        </li>
-        <li>
-          <span>4</span><span>A B</span>
-        </li>
-        <li>
-          <span>5</span><span>#id A</span>
-        </li>
-        <li>
-          <span>6</span><span>.classname</span>
-        </li>
-        <li>
-          <span>7</span><span>A.classname</span>
-        </li>
-        <li>
-          <span>8</span><span>Put your back into it!</span>
-        </li>
-        <li>
-          <span>9</span><span>A, B</span>
-        </li>
-      </ul>
-      <button>Reset progress</button>
+  <header class="header">
+    <h1 class="logo">
+      <a class="logo__a" href="#">
+        <img class="logo__img" src="./img/sushi-1.svg" alt="race logo">
+        <span class="logo__text">Async Race</span>
+      </a>
+    </h1>
+    <nav class="nav">
+      <button class="nav__item" data-type="garage">to Garage</button>
+      <button class="nav__item" data-type="winners">to Winners</button>
     </nav>
-  </aside>
-
+    <div class="control-element">
+      <div class="control-element__item">
+        <input class="control-element__name" type="text" placeholder="Name">
+        <input class="control-element__color" type="color"></input>
+        <button class="control-element__button" data-type="create">Create</button>
+      </div>
+      <div class="control-element__item">
+        <input class="control-element__name" type="text" placeholder="Name">
+        <input class="control-element__color" type="color"></input>
+        <button class="control-element__button" data-type="update">Update</button>
+      </div>
+    </div>
+    <div class="control-main">
+      <button class="control-main__item" data-type="race">Race</button>
+      <button class="control-main__item" data-type="reset">Reset</button>
+      <button class="control-main__item" data-type="generate">Generate cards</button>
+    </div>
+  </header>
+  <main class="main">
+    <article class="garage">
+      <h2 class="garage__header">Garage (7)</h2>
+      <div class="race">
+        <h3 class="race__page">Page #1</h3>
+        <nav class="race__control race-control">
+          <button class="race-control__item" data-type="prev">Prev</button>
+          <button class="race-control__item" data-type="next">Next</button>
+        </nav>
+        <ul class="members-list">
+          <li class="members-list__item" data-id="0">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog0</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="1">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog1</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="2">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog2</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="3">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog3</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="4">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog4</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="5">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog5</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="6">
+            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="remove-element">Remove</button>
+            <p class="members-list__name">Frog6</p>
+            <div class="members-list__track">
+              <button class="members-list__track-button" data-type="drive">A</button>
+              <button class="members-list__track-button" data-type="stop">B</button>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </article>
+    <article class="winners">
+      <h2 class="winners__header">Winners (10)</h2>
+      <table class="table">
+        <thead class="table__header">
+          <tr class="table__header-container">
+            <th class="table__header-item table__header-item--number">Number</th>
+            <th class="table__header-item table__header-item--img">Frog</th>
+            <th class="table__header-item table__header-item--name">Name</th>
+            <th class="table__header-item table__header-item--wins">Wins</th>
+            <th class="table__header-item table__header-item--time">Best time (seconds)</th>
+          </tr>
+        </thead>
+        <tbody class="table__body">
+          <tr class="table__row" data-id="1">
+            <td class="table__column table__column--id">1</td>
+            <td class="table__column table__column--img"><img src="./img/sushi-1.svg" alt=""></td>
+            <td class="table__column table__column--name">Frog2</td>
+            <td class="table__column table__column--wins">1</td>
+            <td class="table__column table__column--time">6</td>
+          </tr>
+          <tr class="table__row" data-id="6">
+            <td class="table__column table__column--id">6</td>
+            <td class="table__column table__column--img"><img src="./img/sushi-1.svg" alt=""></td>
+            <td class="table__column table__column--name">Frog7</td>
+            <td class="table__column table__column--wins">2</td>
+            <td class="table__column table__column--time">6</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </main>
+  <footer class="footer"></footer>
 </body>
 </html>
