@@ -32,4 +32,8 @@ export default class ElementCreator {
       else this.element.addEventListener('click', (event: Event) => callback(event));
     }
   }
+
+  public getElement(): HTMLElement {
+    return this.element;
+  }
 }
