@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="img/sushi-1.svg" type="image/svg+xml">
+  <title>RS-CSS-SELECTORS</title>
+</head>
+<body class="app">
+  <main class="main">
+    <header class="header">
+      <h1 class="logo" href="#">
+        <a class="logo__a" href="#">
+          <img class="logo__img" src="img/sushi-1.svg" alt="">
+          RS-CSS-Selectors
+        </a>
+      </h1>
+      <h2 class="header__rule">Select the plates</h2>
+    </header>
+    <div class="viewer"></div>
+    <div class="editor">
+      <div class="code">
+        <div class="code__header">
+          <h3 class="code__name">CSS</h3>
+          <h4 class="code__filename">style.css</h4>
+        </div>
+        <div class="code__window">
+          <div class="code__numbers">
+            1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20
+          </div>
+          <input class="code__input" type="text" placeholder="Type in a CSS selector">
+          <button class="code__button">Enter</button>
+        </div>
+      </div>
+      <div class="layout">
+        <div class="layout__header">
+          <h3 class="layout__name">HTML</h3>
+          <h4 class="layout__filename">table.html</h4>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <a href="#">Github</a>
+      <a href="#">Design</a>
+      <div>2023</div>
+      <a href="#">RS-Shool</a>
+    </footer>
+  </main>
+  <aside class="aside">
+    <div class="aside-header">
+      <h2>Level 1 of 32</h2>
+      <div class="pagination">
+        <button class="pagination__prev">prev</button>
+        <button class="pagination__next">next</button>
+      </div>
+      <button class="level-menu">Menu</button>
+    </div>
+    <div class="aisde-main">
+      <h3 class="aside-main__header">Type Selector</h3>
+      <h4 class="aside-main__header">Select elements by their type</h4>
+      <p class="aside-main__syntax">A</p>
+      <p class="aside-main__text">
+        Selects all elements of type 
+        <span>A</span>. Type refers to the type of tag, so <span>div</span>, <span>p</span> and <span>ul</span> are all different element types.
+      </p>
+      <h4 class="aside-main__exaples">Examples</h4>
+      <ul class="examples">
+        <li><span>div</span> select all <span>div</span> elements.</li>
+        <li><span>p</span> select all <span>p</span> elements.</li>
+      </ul>
+    </div>
+    <nav class="levels-wrapper">
+      <h2 class="levels-wrapper__header">Choose a level</h2>
+      <ul class="levels">
+        <li>
+          <span>1</span><span>A</span>
+        </li>
+        <li>
+          <span>2</span><span>A</span>
+        </li>
+        <li>
+          <span>3</span><span>#id</span>
+        </li>
+        <li>
+          <span>4</span><span>A B</span>
+        </li>
+        <li>
+          <span>5</span><span>#id A</span>
+        </li>
+        <li>
+          <span>6</span><span>.classname</span>
+        </li>
+        <li>
+          <span>7</span><span>A.classname</span>
+        </li>
+        <li>
+          <span>8</span><span>Put your back into it!</span>
+        </li>
+        <li>
+          <span>9</span><span>A, B</span>
+        </li>
+      </ul>
+      <button>Reset progress</button>
+    </nav>
+  </aside>
+
+</body>
+</html>

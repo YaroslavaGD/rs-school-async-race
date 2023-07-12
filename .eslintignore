@@ -1,0 +1,5 @@
+node_modules
+dist
+.eslintrc.json
+.prettierrc.json
+webpack.config.js
