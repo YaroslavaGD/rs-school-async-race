@@ -22,8 +22,9 @@ html {
 .header {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
-  padding: 2.2rem;
+  padding: 1rem 2.2rem;
 }
 
 .logo {
@@ -38,7 +39,9 @@ html {
   &__a {
     display: flex;
     align-items: center;
-    font-size: .7rem;
+    justify-content: center;
+    width: 100%;
+    font-size: 3rem;
     color: rgba(255,255,255,.5);
     text-decoration: none;
     cursor: pointer;
@@ -46,7 +49,7 @@ html {
 
   &__img {
     display: block;
-    width: 1.5rem;
+    width: 4rem;
     margin-right: 0.5em;
   }
 }
@@ -55,10 +58,12 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2em;
 
   &__item {
-    background-color: rgba(255,255,255,.5);
+    padding: 0.5em 1em;
+    color: rgba(255,255,255,0.8);
+    background-color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
   }
 
@@ -67,9 +72,23 @@ html {
   }
 }
 
+.control-main {
+  &__item {
+    padding: 0.5em 1em;
+    cursor: pointer;
+    background-color: rgba(255,255,255,.5);
+  }
+}
+
 .main {
   width: 100%;
   padding: 0 2.2rem;
+}
+
+.race {
+  &__control {
+    margin-bottom: 2em;
+  }
 }
 
 .members-list {
@@ -77,9 +96,35 @@ html {
   padding: 0;
   list-style-type: none;
   
+  &__controls {
+    display: flex;
+    align-items: center;
+  }
+
+  &__name {
+    margin: 0;
+    margin-left: 0.5em;
+  }
+
   &__img {
     width: 3rem;
   }
+
+  &__track-controls {
+    display: flex;
+  }
+
+  &__button {
+    cursor: pointer;
+  }
+
+  &__track-button {
+    cursor: pointer;
+  }
+}
+
+.winners {
+  display: none;
 }
 
 .footer {

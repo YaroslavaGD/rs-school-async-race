@@ -18,22 +18,11 @@
       <button class="nav__item" data-type="garage">to Garage</button>
       <button class="nav__item" data-type="winners">to Winners</button>
     </nav>
-    <div class="control-element">
-      <div class="control-element__item">
-        <input class="control-element__name" type="text" placeholder="Name">
-        <input class="control-element__color" type="color"></input>
-        <button class="control-element__button" data-type="create">Create</button>
-      </div>
-      <div class="control-element__item">
-        <input class="control-element__name" type="text" placeholder="Name">
-        <input class="control-element__color" type="color"></input>
-        <button class="control-element__button" data-type="update">Update</button>
-      </div>
-    </div>
     <div class="control-main">
       <button class="control-main__item" data-type="race">Race</button>
       <button class="control-main__item" data-type="reset">Reset</button>
       <button class="control-main__item" data-type="generate">Generate cards</button>
+      <button class="control-main__item" data-type="create">Create new</button>
     </div>
   </header>
   <main class="main">
@@ -47,12 +36,44 @@
         </nav>
         <ul class="members-list">
           <li class="members-list__item" data-id="0">
-            <button class="members-list__button" data-type="update-element">Update</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog0</p>
+            <div class="members-list__controls">
+              <button class="members-list__button" data-type="update-element">U</button>
+              <button class="members-list__button" data-type="remove-element">R</button>
+              <p class="members-list__name">Frog0</p>
+            </div>
             <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
+              <div class="members-list__track-controls">
+                <button class="members-list__track-button" data-type="drive">A</button>
+                <button class="members-list__track-button" data-type="stop">B</button>
+              </div>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="0">
+            <div class="members-list__controls">
+              <button class="members-list__button" data-type="update-element">U</button>
+              <button class="members-list__button" data-type="remove-element">R</button>
+              <p class="members-list__name">Frog0</p>
+            </div>
+            <div class="members-list__track">
+              <div class="members-list__track-controls">
+                <button class="members-list__track-button" data-type="drive">A</button>
+                <button class="members-list__track-button" data-type="stop">B</button>
+              </div>
+              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
+            </div>
+          </li>
+          <li class="members-list__item" data-id="0">
+            <div class="members-list__controls">
+              <button class="members-list__button" data-type="update-element">U</button>
+              <button class="members-list__button" data-type="remove-element">R</button>
+              <p class="members-list__name">Frog0</p>
+            </div>
+            <div class="members-list__track">
+              <div class="members-list__track-controls">
+                <button class="members-list__track-button" data-type="drive">A</button>
+                <button class="members-list__track-button" data-type="stop">B</button>
+              </div>
               <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
             </div>
           </li>
@@ -91,7 +112,7 @@
     </article>
   </main>
   <footer class="footer"></footer>
-  <div class="app-modal app-modal--update app-modal--open">
+  <div class="app-modal app-modal--update">
     <div class="app-modal__window">
       <div class="app-modal__header">
         <img class="app-modal__img" src="./img/sushi-1.svg" alt="Default Frog">
