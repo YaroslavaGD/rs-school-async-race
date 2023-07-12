@@ -1,4 +1,4 @@
-import { Callback, ClassesArr, ElementParams } from "../../types";
+import { Callback, ClassesArr, ElementParams } from '../../types';
 
 export default class ElementCreator {
   private element: HTMLElement;
@@ -33,7 +33,19 @@ export default class ElementCreator {
     }
   }
 
+  public setDataType(value: string): void {
+    this.element.dataset.type = value;
+  }
+
   public getElement(): HTMLElement {
     return this.element;
+  }
+
+  public addInnerElement(element: HTMLElement | ElementCreator): void {
+    if (element instanceof ElementCreator) {
+      this.element.append(element.getElement());
+    } else {
+      this.element.append(element);
+    }
   }
 }

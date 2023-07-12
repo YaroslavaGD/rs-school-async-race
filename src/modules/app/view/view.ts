@@ -1,5 +1,5 @@
-import { ElementParams } from "../../types";
-import ElementCreator from "../element-creator/element-creator";
+import { ElementParams } from '../../types';
+import ElementCreator from '../element-creator/element-creator';
 
 export default abstract class View {
   protected elementCreator: ElementCreator;
