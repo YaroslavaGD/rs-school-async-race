@@ -47,69 +47,9 @@
         </nav>
         <ul class="members-list">
           <li class="members-list__item" data-id="0">
-            <button class="members-list__button" data-type="select-element">Select</button>
+            <button class="members-list__button" data-type="update-element">Update</button>
             <button class="members-list__button" data-type="remove-element">Remove</button>
             <p class="members-list__name">Frog0</p>
-            <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
-              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
-            </div>
-          </li>
-          <li class="members-list__item" data-id="1">
-            <button class="members-list__button" data-type="select-element">Select</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog1</p>
-            <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
-              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
-            </div>
-          </li>
-          <li class="members-list__item" data-id="2">
-            <button class="members-list__button" data-type="select-element">Select</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog2</p>
-            <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
-              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
-            </div>
-          </li>
-          <li class="members-list__item" data-id="3">
-            <button class="members-list__button" data-type="select-element">Select</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog3</p>
-            <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
-              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
-            </div>
-          </li>
-          <li class="members-list__item" data-id="4">
-            <button class="members-list__button" data-type="select-element">Select</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog4</p>
-            <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
-              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
-            </div>
-          </li>
-          <li class="members-list__item" data-id="5">
-            <button class="members-list__button" data-type="select-element">Select</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog5</p>
-            <div class="members-list__track">
-              <button class="members-list__track-button" data-type="drive">A</button>
-              <button class="members-list__track-button" data-type="stop">B</button>
-              <img class="members-list__img" src="./img/sushi-1.svg" alt="Frog1">
-            </div>
-          </li>
-          <li class="members-list__item" data-id="6">
-            <button class="members-list__button" data-type="select-element">Select</button>
-            <button class="members-list__button" data-type="remove-element">Remove</button>
-            <p class="members-list__name">Frog6</p>
             <div class="members-list__track">
               <button class="members-list__track-button" data-type="drive">A</button>
               <button class="members-list__track-button" data-type="stop">B</button>
@@ -151,5 +91,18 @@
     </article>
   </main>
   <footer class="footer"></footer>
+  <div class="app-modal app-modal--update app-modal--open">
+    <div class="app-modal__window">
+      <div class="app-modal__header">
+        <img class="app-modal__img" src="./img/sushi-1.svg" alt="Default Frog">
+      </div>
+      <div class="app-modal__content">
+        <input class="app-modal__name" type="text" name="" id="">
+        <input class="app-modal__color" type="color" name="" id="">
+        <button class="app-modal__set">Update</button>
+      </div>
+      <button class="app-modal__button"></button>
+    </div>
+  </div>
 </body>
 </html>
