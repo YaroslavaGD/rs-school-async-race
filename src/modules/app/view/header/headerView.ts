@@ -1,7 +1,9 @@
 import './header.scss';
+import imgFrog from '../../../../img/sushi-1.svg';
 import { ElementParams } from '../../../types';
 import ElementCreator from '../../element-creator/element-creator';
 import View from '../view';
+import ButtonView from '../button/buttonView';
 
 const CssClasses = {
   HEADER: 'header',
@@ -16,6 +18,7 @@ const CssClasses = {
 const TEXT_LOGO = 'Async Race';
 const TEXT_GARAGE = 'to Garage';
 const TEXT_WINNERS = 'to Winners';
+const ALT_LOGO = 'Frog';
 
 export default class HeaderView extends View {
   constructor() {
@@ -53,6 +56,8 @@ export default class HeaderView extends View {
       classesName: [CssClasses.LOGO_IMG],
     };
     const creatorImg = new ElementCreator(paramsImg);
+    creatorImg.getElement().setAttribute('src', imgFrog);
+    creatorImg.getElement().setAttribute('alt', ALT_LOGO);
 
     const paramsText: ElementParams = {
       tag: 'span',
@@ -75,24 +80,11 @@ export default class HeaderView extends View {
     };
     const creatorNav = new ElementCreator(paramsNav);
 
-    const paramsGarage: ElementParams = {
-      tag: 'button',
-      classesName: [CssClasses.NAV_ITEM],
-      textContent: TEXT_GARAGE,
-    };
-    const creatorGarage = new ElementCreator(paramsGarage);
+    const creatorGarage = new ButtonView(CssClasses.NAV_ITEM, TEXT_GARAGE, 'garage');
+    const creatorWinners = new ButtonView(CssClasses.NAV_ITEM, TEXT_WINNERS, 'winners');
 
-    const paramsWinners: ElementParams = {
-      tag: 'button',
-      classesName: [CssClasses.NAV_ITEM],
-      textContent: TEXT_WINNERS,
-    };
-    const creatorWinners = new ElementCreator(paramsWinners);
-
-    creatorGarage.setDataType('garage');
-    creatorWinners.setDataType('winners');
-    creatorNav.addInnerElement(creatorGarage);
-    creatorNav.addInnerElement(creatorWinners);
+    creatorNav.addInnerElement(creatorGarage.getHTMLElement());
+    creatorNav.addInnerElement(creatorWinners.getHTMLElement());
 
     return creatorNav;
   }

@@ -37,6 +37,10 @@ export default class ElementCreator {
     this.element.dataset.type = value;
   }
 
+  public setDataId(value: number): void {
+    this.element.dataset.id = value.toString();
+  }
+
   public getElement(): HTMLElement {
     return this.element;
   }

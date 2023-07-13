@@ -1,7 +1,9 @@
 import './main.scss';
-import { ButtonTypeValue, ElementParams } from '../../../types';
+import { ElementParams } from '../../../types';
 import ElementCreator from '../../element-creator/element-creator';
 import View from '../view';
+import ButtonView from '../button/buttonView';
+import GarageView from './garage/garageView';
 
 const CssClasses = {
   MAIN: 'main',
@@ -28,7 +30,9 @@ export default class MainView extends View {
 
   private configureView(): void {
     const creatorControl = this.createControls();
+    const garageView = new GarageView();
     this.elementCreator.addInnerElement(creatorControl);
+    this.elementCreator.addInnerElement(garageView.getHTMLElement());
   }
 
   private createControls(): ElementCreator {
@@ -38,28 +42,16 @@ export default class MainView extends View {
     };
     const creatorControl = new ElementCreator(paramsControl);
 
-    const creatorRace = this.createControlItem('race', TextControl.RACE);
-    const creatorReset = this.createControlItem('reset', TextControl.RESET);
-    const creatorGenerate = this.createControlItem('generate', TextControl.GENERATE);
-    const creatorCreate = this.createControlItem('create', TextControl.CREATE);
+    const creatorRace = new ButtonView(CssClasses.CONTROL_ITEM, TextControl.RACE, 'race');
+    const creatorReset = new ButtonView(CssClasses.CONTROL_ITEM, TextControl.RESET, 'reset');
+    const creatorGenerate = new ButtonView(CssClasses.CONTROL_ITEM, TextControl.GENERATE, 'generate');
+    const creatorCreate = new ButtonView(CssClasses.CONTROL_ITEM, TextControl.CREATE, 'create');
 
-    creatorControl.addInnerElement(creatorRace);
-    creatorControl.addInnerElement(creatorReset);
-    creatorControl.addInnerElement(creatorGenerate);
-    creatorControl.addInnerElement(creatorCreate);
+    creatorControl.addInnerElement(creatorRace.getHTMLElement());
+    creatorControl.addInnerElement(creatorReset.getHTMLElement());
+    creatorControl.addInnerElement(creatorGenerate.getHTMLElement());
+    creatorControl.addInnerElement(creatorCreate.getHTMLElement());
 
     return creatorControl;
-  }
-
-  private createControlItem(dataType: ButtonTypeValue, text: string): ElementCreator {
-    const paramsControlItem: ElementParams = {
-      tag: 'button',
-      classesName: [CssClasses.CONTROL_ITEM],
-      textContent: text,
-    };
-    const creatorControlItem = new ElementCreator(paramsControlItem);
-    creatorControlItem.setDataType(dataType);
-
-    return creatorControlItem;
   }
 }

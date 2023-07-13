@@ -11,44 +11,6 @@
   padding: 0 2.2rem;
 }
 
-.race {
-  &__control {
-    margin-bottom: 2em;
-  }
-}
-
-.members-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  
-  &__controls {
-    display: flex;
-    align-items: center;
-  }
-
-  &__name {
-    margin: 0;
-    margin-left: 0.5em;
-  }
-
-  &__img {
-    width: 3rem;
-  }
-
-  &__track-controls {
-    display: flex;
-  }
-
-  &__button {
-    cursor: pointer;
-  }
-
-  &__track-button {
-    cursor: pointer;
-  }
-}
-
 .winners {
   display: none;
 }
