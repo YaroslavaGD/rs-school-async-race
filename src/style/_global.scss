@@ -19,6 +19,72 @@ html {
   height: 100%;
 }
 
+.winners {
+  &__header {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.table {
+  display: table;
+  overflow: hidden;
+  width: 80%;
+  margin: 0 auto;
+  padding: 0 0 8em;
+  text-align: left;
+
+  &__img {
+    width: 4rem;
+  }
+
+  &__header-item {
+    font-weight: bold;
+    font-size: 1em;
+    text-align: left;
+    color: #185875;
+	  background-color: #1F2739;
+    cursor: pointer;
+  }
+  
+  &__header-item:hover {
+	  background-color: #bab052;
+  }
+
+  &__column {
+    font-weight: normal;
+    font-size: 1em;
+    -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+    -moz-box-shadow: 0 2px 2px -2px #0E1119;
+    box-shadow: 0 2px 2px -2px #0E1119;
+    transition: 0.3s all;
+  }
+
+  &__column:first-child {
+    color: #FB667A;
+  }
+
+  &__column, &__header-item {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+  }
+
+  &__row:nth-child(odd) {
+	  background-color: #323C50;
+  }
+
+  &__row:nth-child(even) {
+	  background-color: #2C3446;
+  }
+
+  &__row:hover {
+	  background-color: #bab052;
+    color: #403E10;
+    font-weight: bold;
+  }
+}
+
 .footer {
   width: 100%;
   padding: 2.2rem;
