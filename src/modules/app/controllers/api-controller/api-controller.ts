@@ -1,17 +1,19 @@
+import { Car, Winner } from '../../../types';
+
 const BASE_URL = 'http://localhost:3000';
 
-interface Car {
-  id: number;
-  name: string;
-  color: string;
-}
+// interface Car {
+//   id: number;
+//   name: string;
+//   color: string;
+// }
 
-interface Winner {
-  id: number;
-  carId: number;
-  wins: number;
-  time: number;
-}
+// interface Winner {
+//   id: number;
+//   carId: number;
+//   wins: number;
+//   time: number;
+// }
 
 class ApiController {
   private baseUrl: string;

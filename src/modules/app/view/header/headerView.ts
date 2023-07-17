@@ -1,5 +1,5 @@
 import './header.scss';
-import imgFrog from '../../../../img/sushi-1.svg';
+import imgFrog from '../../../../img/frog3.svg';
 import { ElementParams } from '../../../types';
 import ElementCreator from '../../element-creator/element-creator';
 import View from '../view';

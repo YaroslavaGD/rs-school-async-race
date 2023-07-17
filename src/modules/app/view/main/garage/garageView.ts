@@ -1,6 +1,6 @@
 import './garage.scss';
 import View from '../../view';
-import { ElementParams } from '../../../../types';
+import { Car, ElementParams } from '../../../../types';
 import ElementCreator from '../../../element-creator/element-creator';
 import ButtonView from '../../button/buttonView';
 import MembersView from './members/membersView';
@@ -22,23 +22,35 @@ const TEXT_PAGINATION = {
 };
 
 export default class GarageView extends View {
+  // private createCarButtons: HTMLButtonElement[] = [];
+  // private updateCarButtons: HTMLButtonElement[] = [];
+  // private removeCarButtons: HTMLButtonElement[] = [];
+  private membersView: MembersView | null;
+
   constructor() {
     const params: ElementParams = {
       tag: 'article',
       classesName: [CssClasses.GARAGE],
     };
     super(params);
+    this.membersView = null;
     this.configureView();
+  }
+
+  public renderCars(cars: Car[]): void {
+    this.membersView = new MembersView(cars);
+    if (this.membersView) {
+      this.elementCreator.addInnerElement(this.membersView.getHTMLElement());
+    }
   }
 
   private configureView(): void {
     const creatorHeader = this.createHeader();
     const creatorRace = this.createRace();
-    const membersView = new MembersView();
+    // this.membersView = new MembersView();
 
     this.elementCreator.addInnerElement(creatorHeader);
     this.elementCreator.addInnerElement(creatorRace);
-    this.elementCreator.addInnerElement(membersView.getHTMLElement());
   }
 
   private createHeader(): ElementCreator {
