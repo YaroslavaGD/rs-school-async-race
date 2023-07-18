@@ -4,6 +4,7 @@ import { Car, ElementParams } from '../../../../types';
 import ElementCreator from '../../../utils/element-creator';
 import ButtonView from '../../button/buttonView';
 import MembersView from './members/membersView';
+import ControlView from './control/controlView';
 
 const CssClasses = {
   GARAGE: 'garage',
@@ -25,6 +26,8 @@ export default class GarageView extends View {
   // private createCarButtons: HTMLButtonElement[] = [];
   // private updateCarButtons: HTMLButtonElement[] = [];
   // private removeCarButtons: HTMLButtonElement[] = [];
+  private controlView: ControlView;
+
   private membersView: MembersView | null;
 
   constructor() {
@@ -33,6 +36,7 @@ export default class GarageView extends View {
       classesName: [CssClasses.GARAGE],
     };
     super(params);
+    this.controlView = new ControlView();
     this.membersView = null;
     this.configureView();
   }
@@ -50,6 +54,7 @@ export default class GarageView extends View {
     // this.membersView = new MembersView();
 
     this.elementCreator.addInnerElement(creatorHeader);
+    this.elementCreator.addInnerElement(this.controlView.getHTMLElement());
     this.elementCreator.addInnerElement(creatorRace);
   }
 
