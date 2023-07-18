@@ -21,7 +21,12 @@ export type ButtonTypeValue =
   | 'remove-element'
   | 'select-element'
   | 'drive'
-  | 'stop';
+  | 'stop'
+  | 'table-id'
+  | 'table-img'
+  | 'table-name'
+  | 'table-wins'
+  | 'table-time';
 
 export interface Car {
   id: number;
@@ -32,6 +37,14 @@ export interface Car {
 export interface Winner {
   id: number;
   carId: number;
+  wins: number;
+  time: number;
+}
+
+export interface WinnerFull {
+  id: number;
+  name: string;
+  color: string;
   wins: number;
   time: number;
 }

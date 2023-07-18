@@ -1,7 +1,7 @@
 import './garage.scss';
 import View from '../../view';
 import { Car, ElementParams } from '../../../../types';
-import ElementCreator from '../../../element-creator/element-creator';
+import ElementCreator from '../../../utils/element-creator';
 import ButtonView from '../../button/buttonView';
 import MembersView from './members/membersView';
 

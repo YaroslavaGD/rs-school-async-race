@@ -1,6 +1,6 @@
 // import { Callback, Car } from '../../../types';
 import GarageView from '../../view/main/garage/garageView';
-import ApiController from '../api-controller/api-controller';
+import ApiController from '../api-controller/apiController';
 
 export default class GarageController {
   private apiController: ApiController;

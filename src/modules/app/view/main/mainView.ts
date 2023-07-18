@@ -1,9 +1,10 @@
 import './main.scss';
 import { ElementParams } from '../../../types';
-import ElementCreator from '../../element-creator/element-creator';
+import ElementCreator from '../../utils/element-creator';
 import View from '../view';
 import ButtonView from '../button/buttonView';
 import GarageView from './garage/garageView';
+import WinnersView from './winners/winnersView';
 
 const CssClasses = {
   MAIN: 'main',
@@ -27,9 +28,9 @@ const TextControl = {
 export default class MainView extends View {
   private garageView: GarageView;
 
-  private winnersView: GarageView;
+  private winnersView: WinnersView;
 
-  constructor(garageView: GarageView, winnersView: GarageView) {
+  constructor(garageView: GarageView, winnersView: WinnersView) {
     const params: ElementParams = {
       tag: 'main',
       classesName: [CssClasses.MAIN],

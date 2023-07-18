@@ -67,6 +67,19 @@ class ApiController {
     }
   }
 
+  public async getCar(id: number): Promise<Car> {
+    try {
+      const response = await this.request<Car>(`/garage/${id}`);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to get car with id: ${error.message}`);
+      }
+
+      throw new Error('Something went wrong');
+    }
+  }
+
   public async createCar(name: string, color: string): Promise<Car> {
     try {
       const response = await this.request<Car>('/garage', 'POST', { name, color });
@@ -158,6 +171,8 @@ class ApiController {
   public async getWinners(page: number): Promise<Winner[]> {
     try {
       const response = await this.request<Winner[]>(`/winners?_page=${page}&_limit=10`);
+      console.log('response');
+      console.log(response);
       return response;
     } catch (error) {
       if (error instanceof Error) {

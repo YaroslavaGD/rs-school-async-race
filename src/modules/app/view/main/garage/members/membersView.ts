@@ -2,7 +2,7 @@ import './members.scss';
 import imageFrog from '../../../../../../img/frog1.svg';
 import View from '../../../view';
 import { Car, ElementParams } from '../../../../../types';
-import ElementCreator from '../../../../element-creator/element-creator';
+import ElementCreator from '../../../../utils/element-creator';
 import ButtonView from '../../../button/buttonView';
 
 const CssClasses = {

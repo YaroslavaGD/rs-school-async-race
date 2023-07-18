@@ -52,4 +52,8 @@ export default class ElementCreator {
       this.element.append(element);
     }
   }
+
+  public deleteInner(): void {
+    this.element.innerHTML = '';
+  }
 }
