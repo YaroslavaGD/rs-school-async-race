@@ -21,13 +21,20 @@ const TEXT_WINNERS = 'to Winners';
 const ALT_LOGO = 'Frog';
 
 export default class HeaderView extends View {
+  private buttons: ButtonView[];
+
   constructor() {
     const params: ElementParams = {
       tag: 'header',
       classesName: [CssClasses.HEADER],
     };
     super(params);
+    this.buttons = [];
     this.configureView();
+  }
+
+  public getButtons(): ButtonView[] {
+    return this.buttons;
   }
 
   private configureView(): void {
@@ -82,7 +89,8 @@ export default class HeaderView extends View {
 
     const creatorGarage = new ButtonView(CssClasses.NAV_ITEM, TEXT_GARAGE, 'garage');
     const creatorWinners = new ButtonView(CssClasses.NAV_ITEM, TEXT_WINNERS, 'winners');
-
+    this.buttons.push(creatorGarage);
+    this.buttons.push(creatorWinners);
     creatorNav.addInnerElement(creatorGarage.getHTMLElement());
     creatorNav.addInnerElement(creatorWinners.getHTMLElement());
 

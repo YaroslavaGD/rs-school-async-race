@@ -6,6 +6,7 @@ import ElementCreator from '../../../utils/element-creator';
 const CssClasses = {
   WINNERS: 'winners',
   WINNERS_HEADER: 'winners__header',
+  NOT_ACTIVE: 'not-active',
   TABLE: 'table',
   TABLE_HEADER: 'table__header',
   TABLE_HEADER_CONTAINER: 'table__header-container',
@@ -35,7 +36,7 @@ export default class WinnersView extends View {
   constructor() {
     const params: ElementParams = {
       tag: 'article',
-      classesName: [CssClasses.WINNERS],
+      classesName: [CssClasses.WINNERS, CssClasses.NOT_ACTIVE],
     };
     super(params);
     this.tableHeader = this.createTableHeader();
@@ -44,8 +45,16 @@ export default class WinnersView extends View {
     this.configureView();
   }
 
+  public setActive(): void {
+    this.elementCreator.removeClasses(CssClasses.NOT_ACTIVE);
+  }
+
+  public setInactive(): void {
+    this.elementCreator.setClasses([CssClasses.NOT_ACTIVE]);
+  }
+
   public renderWinners(winners: WinnerFull[]): void {
-    this.tableBody.deleteInner();
+    this.tableBody.removeInner();
 
     winners.forEach((winner) => {
       const tableRow = this.renderWinnerRow(winner);

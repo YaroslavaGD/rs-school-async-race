@@ -1,17 +1,10 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<!-- Created using Krita: https://krita.org -->
 <svg xmlns="http://www.w3.org/2000/svg" 
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:krita="http://krita.org/namespaces/svg/krita"
     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-    width="284.88pt"
-    height="177.36pt"
     viewBox="0 0 284.88 177.36">
 <defs/>
-<g id="group0" transform="matrix(0.999999969793168 0 0 0.999999969793168 1.03075722124003 -0.888087477416382)" fill="none">
+<g id="group0" fill="none">
   <ellipse id="shape0" transform="translate(59.0321084361157, 54.1788406235361)" rx="87.8217852921732" ry="60.9999999999951" cx="87.8217852921732" cy="60.9999999999951" fill="#d9d9d9" fill-rule="evenodd" stroke="#000000" stroke-width="1.99999999999984" stroke-linecap="square" stroke-linejoin="bevel"/>
-  <path id="shape1" transform="translate(-2.25616901161629e-07, 2.4370131133922)" fill="#6fbe7d" fill-rule="evenodd" stroke="#000000" stroke-width="1.99999999999984" stroke-linecap="square" stroke-linejoin="bevel" d="M55.1736 39.9481C29.2946 62.2609 2.56131 103.907 0.0864848 128.88C-3.0745 179.949 81.3118 176.5 105.97 167.424C116.263 151.19 87.2594 134.641 71.3417 132.209C80.9172 120.587 109.649 97.802 108.697 63.497C117.287 68.4272 157.634 75.7472 186.816 63.8038C193.776 96.83 219.155 124.09 228.262 128.59C178.799 139.605 177.51 154.896 176.046 165.768C179.12 180.373 286.223 179.354 282.127 132.387C282.127 107.596 263.777 70.6696 239.194 43.8121C240.653 28.7178 236.828 20.6623 229.814 15.2778C222.801 9.89325 210.887 8.89696 197.977 13.6133C182.494 4.26291 164.366 0.217679 145.136 0C118.977 0.186885 107.502 3.38372 93.4836 11.176C80.6014 6.12851 70.8698 6.54464 64.2888 12.4243C56.1097 18.3429 52.7621 29.6358 55.1736 39.9481Z" sodipodi:nodetypes="cccccccccccccccc"/>
+  <path id="frog-color" transform="translate(-2.25616901161629e-07, 2.4370131133922)" fill="#6fbe7d" fill-rule="evenodd" stroke="#000000" stroke-width="1.99999999999984" stroke-linecap="square" stroke-linejoin="bevel" d="M55.1736 39.9481C29.2946 62.2609 2.56131 103.907 0.0864848 128.88C-3.0745 179.949 81.3118 176.5 105.97 167.424C116.263 151.19 87.2594 134.641 71.3417 132.209C80.9172 120.587 109.649 97.802 108.697 63.497C117.287 68.4272 157.634 75.7472 186.816 63.8038C193.776 96.83 219.155 124.09 228.262 128.59C178.799 139.605 177.51 154.896 176.046 165.768C179.12 180.373 286.223 179.354 282.127 132.387C282.127 107.596 263.777 70.6696 239.194 43.8121C240.653 28.7178 236.828 20.6623 229.814 15.2778C222.801 9.89325 210.887 8.89696 197.977 13.6133C182.494 4.26291 164.366 0.217679 145.136 0C118.977 0.186885 107.502 3.38372 93.4836 11.176C80.6014 6.12851 70.8698 6.54464 64.2888 12.4243C56.1097 18.3429 52.7621 29.6358 55.1736 39.9481Z" sodipodi:nodetypes="cccccccccccccccc"/>
   <circle id="shape2" transform="translate(65.1684421127027, 18.8107396967526)" r="14.2670969293814" cx="14.2670969293814" cy="14.2670969293814" fill="#000000" fill-rule="evenodd" stroke-opacity="0" stroke="#000000" stroke-width="0" stroke-linecap="square" stroke-linejoin="bevel"/>
   <ellipse id="shape3" transform="translate(80.032108436114, 25.0561403146096)" rx="4.49999999999964" ry="4.49999999999963" cx="4.49999999999964" cy="4.49999999999963" fill="#ffffff" fill-rule="evenodd" stroke="#ffffff" stroke-width="2.99999999999976" stroke-linecap="square" stroke-linejoin="bevel"/>
   <circle id="shape01" transform="translate(201.219864623219, 22.5844113995951)" r="14.2670969293814" cx="14.2670969293814" cy="14.2670969293814" fill="#000000" fill-rule="evenodd" stroke-opacity="0" stroke="#000000" stroke-width="0" stroke-linecap="square" stroke-linejoin="bevel"/>

@@ -1,4 +1,4 @@
-import { Car, Winner } from '../../../types';
+import { Car, Winner } from '../../types';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -171,8 +171,6 @@ class ApiController {
   public async getWinners(page: number): Promise<Winner[]> {
     try {
       const response = await this.request<Winner[]>(`/winners?_page=${page}&_limit=10`);
-      console.log('response');
-      console.log(response);
       return response;
     } catch (error) {
       if (error instanceof Error) {

@@ -28,6 +28,11 @@ export type ButtonTypeValue =
   | 'table-wins'
   | 'table-time';
 
+export type NewCar = {
+  name: string;
+  color: string;
+};
+
 export interface Car {
   id: number;
   name: string;

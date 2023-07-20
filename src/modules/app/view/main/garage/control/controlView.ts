@@ -23,6 +23,10 @@ const TextControl = {
 };
 
 export default class ControlView extends View {
+  private inputs: ElementCreator[] = [];
+
+  private buttons: ButtonView[] = [];
+
   constructor() {
     const params: ElementParams = {
       tag: 'div',
@@ -30,6 +34,14 @@ export default class ControlView extends View {
     };
     super(params);
     this.configureView();
+  }
+
+  public getInputs(): ElementCreator[] {
+    return this.inputs;
+  }
+
+  public getButtons(): ButtonView[] {
+    return this.buttons;
   }
 
   private configureView(): void {
@@ -42,6 +54,10 @@ export default class ControlView extends View {
     this.elementCreator.addInnerElement(creatorRace.getHTMLElement());
     this.elementCreator.addInnerElement(creatorReset.getHTMLElement());
     this.elementCreator.addInnerElement(creatorGenerate.getHTMLElement());
+
+    this.buttons.push(creatorRace);
+    this.buttons.push(creatorReset);
+    this.buttons.push(creatorGenerate);
   }
 
   private createElementControls(): ElementCreator {
@@ -77,6 +93,9 @@ export default class ControlView extends View {
 
     creatorName.addInnerElement(creatorInput);
     creatorName.addInnerElement(creatorCreate.getHTMLElement());
+
+    this.inputs.push(creatorInput);
+    this.buttons.push(creatorCreate);
     return creatorName;
   }
 
@@ -98,6 +117,9 @@ export default class ControlView extends View {
 
     creatorColor.addInnerElement(creatorInput);
     creatorColor.addInnerElement(creatorUpdate.getHTMLElement());
+
+    this.inputs.push(creatorInput);
+    this.buttons.push(creatorUpdate);
     return creatorColor;
   }
 }

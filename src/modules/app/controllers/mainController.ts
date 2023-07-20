@@ -1,7 +1,7 @@
-import MainView from '../../view/main/mainView';
-import ApiController from '../api-controller/apiController';
-import GarageController from '../garage-controller/garageController';
-import WinnersController from '../winners-controller/winnersController';
+import MainView from '../view/main/mainView';
+import ApiController from './apiController';
+import GarageController from './garageController';
+import WinnersController from './winnersController';
 
 export default class MainController {
   // private apiController: ApiController;

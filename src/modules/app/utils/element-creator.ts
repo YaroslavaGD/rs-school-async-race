@@ -28,8 +28,11 @@ export default class ElementCreator {
 
   public setCallback(callback?: Callback, eventName?: string): void {
     if (callback) {
-      if (eventName) this.element.addEventListener(eventName, (event: Event) => callback(event));
-      else this.element.addEventListener('click', (event: Event) => callback(event));
+      if (eventName) {
+        this.element.addEventListener(eventName, (event: Event) => callback(event));
+      } else {
+        this.element.addEventListener('click', (event: Event) => callback(event));
+      }
     }
   }
 
@@ -45,6 +48,10 @@ export default class ElementCreator {
     return this.element;
   }
 
+  public addInnerHtml(text: string): void {
+    this.element.innerHTML = text;
+  }
+
   public addInnerElement(element: HTMLElement | ElementCreator): void {
     if (element instanceof ElementCreator) {
       this.element.append(element.getElement());
@@ -53,7 +60,7 @@ export default class ElementCreator {
     }
   }
 
-  public deleteInner(): void {
+  public removeInner(): void {
     this.element.innerHTML = '';
   }
 }

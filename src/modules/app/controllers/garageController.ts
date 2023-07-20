@@ -1,6 +1,9 @@
 // import { Callback, Car } from '../../../types';
-import GarageView from '../../view/main/garage/garageView';
-import ApiController from '../api-controller/apiController';
+import { NewCar } from '../../types';
+import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
+import GarageView from '../view/main/garage/garageView';
+import ApiController from './apiController';
+import ControlController from './controlController';
 
 export default class GarageController {
   private apiController: ApiController;
@@ -9,31 +12,54 @@ export default class GarageController {
 
   constructor(apiController: ApiController) {
     this.apiController = apiController;
-    this.garageView = new GarageView();
+    const controlController = new ControlController();
+    this.garageView = new GarageView(controlController.getControlView());
     this.init();
-  }
-
-  private init(): void {
-    // this.renderGarage();
-    this.loadCars();
-    // this.addEventListeners();
   }
 
   public getGarageView(): GarageView {
     return this.garageView;
-    // const garageElement = this.garageView.getHTMLElement();
-    // Рендеринг гаража в нужном месте на странице
   }
 
-  private async loadCars(): Promise<void> {
+  private init(): void {
+    this.loadCars(true);
+    this.addEventListeners();
+  }
+
+  private async loadCars(isNew: boolean): Promise<void> {
     try {
       const cars = await this.apiController.getCars(1);
-      this.garageView.renderCars(cars);
+      if (isNew) {
+        this.garageView.createCars(cars);
+      } else {
+        this.garageView.updateCars(cars);
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
+  private addEventListeners(): void {
+    const garage = this.garageView;
+    eventEmitter.subscribe(EventType.TO_GARAGE, garage.setActive.bind(garage));
+    eventEmitter.subscribe(EventType.TO_WINNERS, garage.setInactive.bind(garage));
+    eventEmitter.subscribe(EventType.CREATE, this.createNewCar.bind(this));
+  }
+
+  private async createNewCarServer(newCar?: NewCar): Promise<void> {
+    try {
+      if (newCar) {
+        await this.apiController.createCar(newCar.name, newCar.color);
+        await this.loadCars(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private createNewCar(newCar?: NewCar): void {
+    this.createNewCarServer(newCar);
+  }
   // private addEventListeners(): void {
   //   const createCarButtons = this.garageView.getCreateCarButtons();
   //   const updateCarButtons = this.garageView.getUpdateCarButtons();

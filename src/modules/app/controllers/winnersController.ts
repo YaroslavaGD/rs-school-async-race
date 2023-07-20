@@ -1,6 +1,7 @@
-import { WinnerFull } from '../../../types';
-import WinnersView from '../../view/main/winners/winnersView';
-import ApiController from '../api-controller/apiController';
+import { WinnerFull } from '../../types';
+import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
+import WinnersView from '../view/main/winners/winnersView';
+import ApiController from './apiController';
 
 export default class WinnersController {
   private apiController: ApiController;
@@ -19,6 +20,7 @@ export default class WinnersController {
 
   private init(): void {
     this.loadWinners(1);
+    this.addEventListeners();
   }
 
   private async loadWinners(page: number): Promise<void> {
@@ -41,5 +43,11 @@ export default class WinnersController {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  private addEventListeners(): void {
+    const winners = this.winnersView;
+    eventEmitter.subscribe(EventType.TO_WINNERS, winners.setActive.bind(winners));
+    eventEmitter.subscribe(EventType.TO_GARAGE, winners.setInactive.bind(winners));
   }
 }

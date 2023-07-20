@@ -1,4 +1,5 @@
 import { ButtonTypeValue, ElementParams } from '../../../types';
+import ElementCreator from '../../utils/element-creator';
 import View from '../view';
 
 export default class ButtonView extends View {
@@ -11,5 +12,9 @@ export default class ButtonView extends View {
     super(params);
 
     this.elementCreator.setDataType(type);
+  }
+
+  public getCreator(): ElementCreator {
+    return this.elementCreator;
   }
 }

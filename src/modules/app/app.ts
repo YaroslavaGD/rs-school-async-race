@@ -1,8 +1,6 @@
-// import ApiController from './controllers/api-controller/api-controller';
-import ApiController from './controllers/api-controller/apiController';
-import MainController from './controllers/main-controller/mainController';
-import HeaderView from './view/header/headerView';
-// import MainView from './view/main/mainView';
+import ApiController from './controllers/apiController';
+import HeaderController from './controllers/headerController';
+import MainController from './controllers/mainController';
 
 export default class App {
   private apiController: ApiController;
@@ -13,12 +11,11 @@ export default class App {
   }
 
   public async run(): Promise<void> {
-    try {
-      const car = await this.apiController.getCar(1);
-      console.log(car);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const car = await this.apiController.getCar(1);
+    // } catch (error) {
+    //   console.log(error);
+    // }
     // console.log('получение списка машин на первой странице');
     // try {
     //   const cars = await this.apiController.getCars(1);
@@ -50,8 +47,8 @@ export default class App {
   }
 
   private async createView(): Promise<void> {
-    const headerView = new HeaderView();
-    const header = headerView.getHTMLElement();
+    const headerController = new HeaderController();
+    const header = headerController.getView().getHTMLElement();
 
     // const mainController = new MainController(this.apiController);
     // const main = mainController.getView().getHTMLElement();

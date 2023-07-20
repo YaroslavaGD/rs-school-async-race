@@ -9,6 +9,7 @@ import ControlView from './control/controlView';
 const CssClasses = {
   GARAGE: 'garage',
   HEADER: 'garage__header',
+  NOT_ACTIVE: 'not-active',
   RACE: 'race',
   RACE_PAGE: 'race__page',
   RACE_PAGINATION: 'race-pagination',
@@ -30,20 +31,37 @@ export default class GarageView extends View {
 
   private membersView: MembersView | null;
 
-  constructor() {
+  constructor(controlView: ControlView) {
     const params: ElementParams = {
       tag: 'article',
       classesName: [CssClasses.GARAGE],
     };
     super(params);
-    this.controlView = new ControlView();
+    this.controlView = controlView;
     this.membersView = null;
     this.configureView();
   }
 
-  public renderCars(cars: Car[]): void {
+  public setActive(): void {
+    this.elementCreator.removeClasses(CssClasses.NOT_ACTIVE);
+  }
+
+  public setInactive(): void {
+    this.elementCreator.setClasses([CssClasses.NOT_ACTIVE]);
+  }
+
+  public getCreator(): ElementCreator {
+    return this.elementCreator;
+  }
+
+  public updateCars(cars: Car[]): void {
+    this.membersView?.updateView(cars);
+  }
+
+  public createCars(cars: Car[]): void {
     this.membersView = new MembersView(cars);
     if (this.membersView) {
+      // this.membersView.getCreator().removeInner();
       this.elementCreator.addInnerElement(this.membersView.getHTMLElement());
     }
   }

@@ -1,19 +1,22 @@
+import { NewCar } from '../../types';
+
 export enum EventType {
   TO_GARAGE = 'to-garage',
   TO_WINNERS = 'to-winners',
-};
+  CREATE = 'create',
+}
 
 export const eventEmitter: {
   readonly events: Record<string, (() => void)[]>;
-  emit(eventType: EventType, data?: string): void;
-  subscribe(eventType: EventType, callback: (data?: string) => void): void;
+  emit(eventType: EventType, data?: NewCar): void;
+  subscribe(eventType: EventType, callback: (data?: NewCar) => void): void;
   unsubscribe(eventType: EventType): void;
 } = {
   events: {},
 
   emit(eventName, data) {
     if (!this.events[eventName]) return;
-    this.events[eventName].forEach((callback: (data?: string) => void) => callback(data));
+    this.events[eventName].forEach((callback: (data?: NewCar) => void) => callback(data));
   },
 
   subscribe(eventName, callback) {
