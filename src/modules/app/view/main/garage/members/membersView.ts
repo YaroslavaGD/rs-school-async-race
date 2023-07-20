@@ -1,10 +1,10 @@
 import './members.scss';
-// import imageFrog from '../../../../../../img/frog1.svg';
 import View from '../../../view';
 import { Car, ElementParams } from '../../../../../types';
 import ElementCreator from '../../../../utils/element-creator';
 import ButtonView from '../../../button/buttonView';
-import FROG_SVG from '../../../../data/frog';
+import ImageCarView from '../../../imageCar/imageCarView';
+import CarView from './car/CarView';
 
 const CssClasses = {
   MEMBERS: 'members',
@@ -31,6 +31,8 @@ const TEXT_BUTTONS = {
 // const DEFAULT_NAME = 'Frog';
 
 export default class MembersView extends View {
+  private cars: CarView[] = [];
+
   constructor(cars: Car[]) {
     const params: ElementParams = {
       tag: 'ul',
@@ -45,17 +47,41 @@ export default class MembersView extends View {
   }
 
   public updateView(cars: Car[]): void {
-    this.elementCreator.removeInner();
-    for (let i = 0; i < cars.length; i += 1) {
-      const member = this.createMembersItem(Number(cars[i].id), cars[i].name, cars[i].color);
-      this.elementCreator.addInnerElement(member);
+    if (this.cars.length === cars.length) {
+      for (let i = 0; i < this.cars.length; i += 1) {
+        this.cars[i].updateCar(cars[i]);
+      }
+    }
+
+    if (this.cars.length > cars.length) {
+      this.cars = [];
+      this.elementCreator.removeInner();
+      this.createCars(cars);
+    }
+
+    if (this.cars.length < cars.length) {
+      this.cars = [];
+      this.elementCreator.removeInner();
+      this.createCars(cars);
     }
   }
 
   private configureView(cars: Car[]): void {
+    // for (let i = 0; i < cars.length; i += 1) {
+    //   // const member = this.createMembersItem(Number(cars[i].id), cars[i].name, cars[i].color);
+    //   const car = new CarView(cars[i]);
+    //   this.cars.push(car);
+    //   this.elementCreator.addInnerElement(car.getHTMLElement());
+    // }
+
+    this.createCars(cars);
+  }
+
+  private createCars(cars: Car[]): void {
     for (let i = 0; i < cars.length; i += 1) {
-      const member = this.createMembersItem(Number(cars[i].id), cars[i].name, cars[i].color);
-      this.elementCreator.addInnerElement(member);
+      const car = new CarView(cars[i]);
+      this.cars.push(car);
+      this.elementCreator.addInnerElement(car.getHTMLElement());
     }
   }
 
@@ -132,21 +158,12 @@ export default class MembersView extends View {
 
     creatorTrackNav.addInnerElement(creatorDriveButton.getHTMLElement());
     creatorTrackNav.addInnerElement(creatorStopButton.getHTMLElement());
-
     return creatorTrackNav;
   }
 
   private createMembersImg(color: string): ElementCreator {
-    const paramsImg: ElementParams = {
-      tag: 'div',
-      classesName: [CssClasses.MEMBERS_IMG],
-    };
-    const creatorImg = new ElementCreator(paramsImg);
-    creatorImg.addInnerHtml(FROG_SVG);
-    const colorImg = creatorImg.getElement().querySelector('.frog-color');
-    colorImg?.setAttribute('fill', color);
-    // creatorImg.getElement().setAttribute('src', imageFrog);
-
-    return creatorImg;
+    const imageView = new ImageCarView(color);
+    imageView.getCreator().setClasses([CssClasses.MEMBERS_IMG]);
+    return imageView.getCreator();
   }
 }

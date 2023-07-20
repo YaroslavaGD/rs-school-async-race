@@ -10,8 +10,9 @@ const CssClasses = {
 
 const DEFAULT_COLOR = '#6fbe7d';
 
-export default class ImageFrogView extends View {
+export default class ImageCarView extends View {
   private color: string = DEFAULT_COLOR;
+
   private imageColorContainer: HTMLElement | null = null;
 
   constructor(color: string) {
