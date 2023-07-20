@@ -1,6 +1,6 @@
 import './garage.scss';
 import View from '../../view';
-import { Car, ElementParams } from '../../../../types';
+import { ElementParams } from '../../../../types';
 import ElementCreator from '../../../utils/element-creator';
 import ButtonView from '../../button/buttonView';
 import MembersView from './members/membersView';
@@ -54,17 +54,24 @@ export default class GarageView extends View {
     return this.elementCreator;
   }
 
-  public updateCars(cars: Car[]): void {
-    this.membersView?.updateView(cars);
-  }
+  // public updateCars(cars: Car[]): void {
+  //   this.membersView?.updateView(cars);
+  // }
 
-  public createCars(cars: Car[]): void {
-    this.membersView = new MembersView(cars);
+  public setMembersView(membersView: MembersView): void {
+    this.membersView = membersView;
     if (this.membersView) {
-      // this.membersView.getCreator().removeInner();
       this.elementCreator.addInnerElement(this.membersView.getHTMLElement());
     }
   }
+
+  // public createCars(cars: Car[]): void {
+  //   this.membersView = new MembersView(cars);
+  //   if (this.membersView) {
+  //     // this.membersView.getCreator().removeInner();
+  //     this.elementCreator.addInnerElement(this.membersView.getHTMLElement());
+  //   }
+  // }
 
   private configureView(): void {
     const creatorHeader = this.createHeader();

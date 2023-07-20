@@ -44,6 +44,10 @@ export default class CarView extends View {
     this.configureView();
   }
 
+  public getButtons(): ButtonView[] {
+    return this.carButtons;
+  }
+
   public updateCar(car: Car): void {
     this.carData = car;
     this.updateId();
@@ -93,13 +97,13 @@ export default class CarView extends View {
     };
     const creatorNav = new ElementCreator(paramsNav);
 
-    const creatorRemoveButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.REMOVE, 'remove-element');
     const creatorSelectButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.SELECT, 'select-element');
+    const creatorRemoveButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.REMOVE, 'remove-element');
     const creatorDriveButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.DRIVE, 'drive');
     const creatorStopButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.STOP, 'stop');
 
-    this.carButtons.push(creatorRemoveButton);
     this.carButtons.push(creatorSelectButton);
+    this.carButtons.push(creatorRemoveButton);
     this.carButtons.push(creatorDriveButton);
     this.carButtons.push(creatorStopButton);
 

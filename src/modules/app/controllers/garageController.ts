@@ -4,11 +4,14 @@ import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 import GarageView from '../view/main/garage/garageView';
 import ApiController from './apiController';
 import ControlController from './controlController';
+import MembersController from './membersController';
 
 export default class GarageController {
   private apiController: ApiController;
 
   private garageView: GarageView;
+
+  private membersController: MembersController | null = null;
 
   constructor(apiController: ApiController) {
     this.apiController = apiController;
@@ -30,9 +33,11 @@ export default class GarageController {
     try {
       const cars = await this.apiController.getCars(1);
       if (isNew) {
-        this.garageView.createCars(cars);
+        this.membersController = new MembersController(cars);
+        this.garageView.setMembersView(this.membersController.getMembersView());
       } else {
-        this.garageView.updateCars(cars);
+        this.membersController?.updateCars(cars);
+        // this.garageView.updateCars(cars);
       }
     } catch (error) {
       console.log(error);

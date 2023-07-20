@@ -30,6 +30,10 @@
     display: block;
     width: 4rem;
     margin-right: 0.5em;
+    transition: 5s animation;
+  }
+  &__img:hover {
+    animation: frog-rotate 5s linear infinite;
   }
 }
 
@@ -48,5 +52,17 @@
 
   &__item + &__item {
     margin-left: 1em;
+  }
+}
+
+@keyframes frog-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(359deg);
   }
 }
