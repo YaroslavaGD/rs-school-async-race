@@ -44,6 +44,10 @@ export default class CarView extends View {
     this.configureView();
   }
 
+  public getCarData(): Car {
+    return this.carData;
+  }
+
   public getButtons(): ButtonView[] {
     return this.carButtons;
   }

@@ -1,5 +1,5 @@
 // import { Callback, Car } from '../../../types';
-import { NewCar } from '../../types';
+import { Car } from '../../types';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 import GarageView from '../view/main/garage/garageView';
 import ApiController from './apiController';
@@ -13,10 +13,12 @@ export default class GarageController {
 
   private membersController: MembersController | null = null;
 
+  private controlController: ControlController;
+
   constructor(apiController: ApiController) {
     this.apiController = apiController;
-    const controlController = new ControlController();
-    this.garageView = new GarageView(controlController.getControlView());
+    this.controlController = new ControlController();
+    this.garageView = new GarageView(this.controlController.getControlView());
     this.init();
   }
 
@@ -49,9 +51,10 @@ export default class GarageController {
     eventEmitter.subscribe(EventType.TO_GARAGE, garage.setActive.bind(garage));
     eventEmitter.subscribe(EventType.TO_WINNERS, garage.setInactive.bind(garage));
     eventEmitter.subscribe(EventType.CREATE, this.createNewCar.bind(this));
+    eventEmitter.subscribe(EventType.UPDATE, this.updateCar.bind(this));
   }
 
-  private async createNewCarServer(newCar?: NewCar): Promise<void> {
+  private async createNewCarServer(newCar?: Car): Promise<void> {
     try {
       if (newCar) {
         await this.apiController.createCar(newCar.name, newCar.color);
@@ -62,8 +65,23 @@ export default class GarageController {
     }
   }
 
-  private createNewCar(newCar?: NewCar): void {
+  private createNewCar(newCar?: Car): void {
     this.createNewCarServer(newCar);
+  }
+
+  private async updateCarServer(newCar?: Car): Promise<void> {
+    try {
+      if (newCar) {
+        await this.apiController.updateCar(newCar.id, newCar.name, newCar.color);
+        await this.loadCars(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private updateCar(newCar?: Car): void {
+    this.updateCarServer(newCar);
   }
   // private addEventListeners(): void {
   //   const createCarButtons = this.garageView.getCreateCarButtons();

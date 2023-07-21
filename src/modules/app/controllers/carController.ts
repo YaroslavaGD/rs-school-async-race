@@ -1,4 +1,5 @@
 import { Car } from '../../types';
+import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 import CarView from '../view/main/garage/members/car/CarView';
 
 enum CarButtons {
@@ -29,6 +30,7 @@ export default class CarController {
 
     buttons[CarButtons.SELECT].getCreator().setCallback(() => {
       console.log('select');
+      eventEmitter.emit(EventType.SELECT, this.carView.getCarData());
     });
 
     buttons[CarButtons.REMOVE].getCreator().setCallback(() => {
