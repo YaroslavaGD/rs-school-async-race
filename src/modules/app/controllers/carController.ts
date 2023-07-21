@@ -35,6 +35,7 @@ export default class CarController {
 
     buttons[CarButtons.REMOVE].getCreator().setCallback(() => {
       console.log('remove');
+      eventEmitter.emit(EventType.REMOVE, this.carView.getCarData());
     });
 
     buttons[CarButtons.DRIVE].getCreator().setCallback(() => {

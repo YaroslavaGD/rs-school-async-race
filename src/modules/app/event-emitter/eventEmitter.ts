@@ -5,6 +5,7 @@ export enum EventType {
   TO_WINNERS = 'to-winners',
   CREATE = 'create',
   UPDATE = 'update',
+  REMOVE = 'remove',
   SELECT = 'select',
 }
 

@@ -52,6 +52,7 @@ export default class GarageController {
     eventEmitter.subscribe(EventType.TO_WINNERS, garage.setInactive.bind(garage));
     eventEmitter.subscribe(EventType.CREATE, this.createNewCar.bind(this));
     eventEmitter.subscribe(EventType.UPDATE, this.updateCar.bind(this));
+    eventEmitter.subscribe(EventType.REMOVE, this.removeCar.bind(this));
   }
 
   private async createNewCarServer(newCar?: Car): Promise<void> {
@@ -82,6 +83,21 @@ export default class GarageController {
 
   private updateCar(newCar?: Car): void {
     this.updateCarServer(newCar);
+  }
+
+  private async removeCarServer(newCar?: Car): Promise<void> {
+    try {
+      if (newCar) {
+        await this.apiController.deleteCar(newCar.id);
+        await this.loadCars(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private removeCar(newCar?: Car): void {
+    this.removeCarServer(newCar);
   }
   // private addEventListeners(): void {
   //   const createCarButtons = this.garageView.getCreateCarButtons();
