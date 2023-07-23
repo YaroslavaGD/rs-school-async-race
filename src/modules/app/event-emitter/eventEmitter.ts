@@ -1,12 +1,23 @@
 import { Car } from '../../types';
 
 export enum EventType {
-  TO_GARAGE = 'to-garage',
-  TO_WINNERS = 'to-winners',
-  CREATE = 'create',
-  UPDATE = 'update',
-  REMOVE = 'remove',
-  SELECT = 'select',
+  TO_GARAGE,
+  TO_WINNERS,
+  CREATE,
+  UPDATE,
+  REMOVE,
+  SELECT,
+  CAR_CHANGE,
+  NEW_CAR_CHANGE,
+  CARS_CHANGE,
+  WINNER_CHANGE,
+  NEW_WINNER_CHANGE,
+  WINNERS_CHANGE,
+  SELECTED_CAR_ID_CHANGE,
+  CURRENT_CARS_PAGE_CHANGE,
+  CURRENT_WINNERS_PAGE_CHANGE,
+  TOTAL_CARS_CHANGE,
+  TOTAL_WINNERS_CHANGE,
 }
 
 export const eventEmitter: {
