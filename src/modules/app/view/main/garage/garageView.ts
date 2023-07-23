@@ -5,6 +5,7 @@ import ElementCreator from '../../../utils/element-creator';
 import ButtonView from '../../button/buttonView';
 import MembersView from './members/membersView';
 import ControlView from './control/controlView';
+import appStorage from '../../../data/app-storage';
 
 const CssClasses = {
   GARAGE: 'garage',
@@ -16,7 +17,7 @@ const CssClasses = {
   RACE_PAGINATION_ITEM: 'race-pagination__item',
 };
 
-const TEXT_HEADER = 'Garage(7)';
+const TEXT_HEADER = 'Garage';
 const TEXT_PAGE = 'Page #1';
 const TEXT_PAGINATION = {
   PREV: 'prev',
@@ -24,12 +25,11 @@ const TEXT_PAGINATION = {
 };
 
 export default class GarageView extends View {
-  // private createCarButtons: HTMLButtonElement[] = [];
-  // private updateCarButtons: HTMLButtonElement[] = [];
-  // private removeCarButtons: HTMLButtonElement[] = [];
   private controlView: ControlView;
 
   private membersView: MembersView | null;
+
+  private headerCreator: ElementCreator | null;
 
   constructor(controlView: ControlView) {
     const params: ElementParams = {
@@ -39,6 +39,7 @@ export default class GarageView extends View {
     super(params);
     this.controlView = controlView;
     this.membersView = null;
+    this.headerCreator = null;
     this.configureView();
   }
 
@@ -54,10 +55,6 @@ export default class GarageView extends View {
     return this.elementCreator;
   }
 
-  // public updateCars(cars: Car[]): void {
-  //   this.membersView?.updateView(cars);
-  // }
-
   public setMembersView(membersView: MembersView): void {
     this.membersView = membersView;
     if (this.membersView) {
@@ -65,13 +62,9 @@ export default class GarageView extends View {
     }
   }
 
-  // public createCars(cars: Car[]): void {
-  //   this.membersView = new MembersView(cars);
-  //   if (this.membersView) {
-  //     // this.membersView.getCreator().removeInner();
-  //     this.elementCreator.addInnerElement(this.membersView.getHTMLElement());
-  //   }
-  // }
+  public setHeader(): void {
+    this.headerCreator?.setTextContent(`${TEXT_HEADER}(${appStorage.getTotalsCars()})`);
+  }
 
   private configureView(): void {
     const creatorHeader = this.createHeader();
@@ -87,9 +80,10 @@ export default class GarageView extends View {
     const paramsHeader: ElementParams = {
       tag: 'h3',
       classesName: [CssClasses.HEADER],
-      textContent: TEXT_HEADER,
+      textContent: `${TEXT_HEADER}(${appStorage.getTotalsCars()})`,
     };
     const creatorHeader = new ElementCreator(paramsHeader);
+    this.headerCreator = creatorHeader;
     return creatorHeader;
   }
 

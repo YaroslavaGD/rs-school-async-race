@@ -49,6 +49,7 @@ export default class ControlController {
           color,
         };
         appStorage.setNewCar(newCar);
+        appStorage.setTotalsCars(appStorage.getTotalsCars() + 1);
         eventEmitter.emit(EventType.CREATE);
       }
     });

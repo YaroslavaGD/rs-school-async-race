@@ -1,4 +1,5 @@
 import { Car } from '../../types';
+import appStorage from '../data/app-storage';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 import CarView from '../view/main/garage/members/car/CarView';
 
@@ -35,6 +36,7 @@ export default class CarController {
 
     buttons[CarButtons.REMOVE].getCreator().setCallback(() => {
       console.log('remove');
+      appStorage.setTotalsCars(appStorage.getTotalsCars() - 1);
       eventEmitter.emit(EventType.REMOVE, this.carView.getId());
     });
 

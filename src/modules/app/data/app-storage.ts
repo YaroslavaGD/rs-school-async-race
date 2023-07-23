@@ -83,6 +83,9 @@ class AppStorage {
     if (totalNumber >= 0) {
       this.totalCars = totalNumber;
       eventEmitter.emit(EventType.TOTAL_CARS_CHANGE);
+    } else {
+      this.totalCars = 0;
+      eventEmitter.emit(EventType.TOTAL_CARS_CHANGE);
     }
   }
 
