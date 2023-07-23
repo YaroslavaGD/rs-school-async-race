@@ -12,8 +12,8 @@ enum CarButtons {
 export default class CarController {
   private carView: CarView;
 
-  constructor(car: Car) {
-    this.carView = new CarView(car);
+  constructor(id: number, car: Car) {
+    this.carView = new CarView(id, car);
     this.init();
   }
 
@@ -30,12 +30,12 @@ export default class CarController {
 
     buttons[CarButtons.SELECT].getCreator().setCallback(() => {
       console.log('select');
-      eventEmitter.emit(EventType.SELECT, this.carView.getCarData());
+      eventEmitter.emit(EventType.SELECT, this.carView.getId());
     });
 
     buttons[CarButtons.REMOVE].getCreator().setCallback(() => {
       console.log('remove');
-      eventEmitter.emit(EventType.REMOVE, this.carView.getCarData());
+      eventEmitter.emit(EventType.REMOVE, this.carView.getId());
     });
 
     buttons[CarButtons.DRIVE].getCreator().setCallback(() => {

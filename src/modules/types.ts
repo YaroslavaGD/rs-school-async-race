@@ -38,6 +38,11 @@ export interface WinnersData {
   winners: Winner[];
 }
 
+export interface NewCar {
+  name: string;
+  color: string;
+}
+
 export interface Car {
   id: number;
   name: string;

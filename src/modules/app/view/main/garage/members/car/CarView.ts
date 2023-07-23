@@ -25,6 +25,8 @@ const TEXT_BUTTONS = {
 };
 
 export default class CarView extends View {
+  private id = 0;
+
   private carData: Car;
 
   private carImageView: ImageCarView | null = null;
@@ -33,15 +35,20 @@ export default class CarView extends View {
 
   private carButtons: ButtonView[];
 
-  constructor(car: Car) {
+  constructor(id: number, car: Car) {
     const params: ElementParams = {
       tag: 'li',
       classesName: [CssClasses.CAR_ITEM],
     };
     super(params);
-    this.carData = car;
+    this.id = id;
+    this.carData = { ...car };
     this.carButtons = [];
     this.configureView();
+  }
+
+  public getId(): number {
+    return this.id;
   }
 
   public getCarData(): Car {
@@ -72,7 +79,7 @@ export default class CarView extends View {
   }
 
   private configureView(): void {
-    this.elementCreator.setDataId(this.carData.id);
+    this.elementCreator.setDataId(this.id);
     const nameCreator = this.createName();
     const buttonsCreator = this.createCarsButtons();
     const trackCreator = this.createCarTrack();

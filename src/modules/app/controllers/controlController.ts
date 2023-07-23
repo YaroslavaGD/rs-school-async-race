@@ -1,4 +1,5 @@
-import { Car } from '../../types';
+import { Car, NewCar } from '../../types';
+import appStorage from '../data/app-storage';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 import ControlView from '../view/main/garage/control/controlView';
 
@@ -35,6 +36,7 @@ export default class ControlController {
   private addEventListeners(): void {
     const buttons = this.controlView.getButtons();
     const inputs = this.controlView.getInputs();
+
     buttons[ControlButtons.Create].getCreator().setCallback(() => {
       const nameInput = inputs[ControlInputs.Name].getElement();
       const colorInput = inputs[ControlInputs.Color].getElement();
@@ -42,40 +44,42 @@ export default class ControlController {
       if (nameInput instanceof HTMLInputElement && colorInput instanceof HTMLInputElement) {
         const name = nameInput.value;
         const color = colorInput.value;
-        const newCar: Car = {
-          id: -1, // для новых машин ненужный id
+        const newCar: NewCar = {
           name,
           color,
         };
-
-        eventEmitter.emit(EventType.CREATE, newCar);
+        appStorage.setNewCar(newCar);
+        eventEmitter.emit(EventType.CREATE);
       }
     });
 
     buttons[ControlButtons.Update].getCreator().setCallback(() => {
       const nameInput = inputs[ControlInputs.Name].getElement();
       const colorInput = inputs[ControlInputs.Color].getElement();
-
       if (nameInput instanceof HTMLInputElement && colorInput instanceof HTMLInputElement) {
         const name = nameInput.value;
         const color = colorInput.value;
-        const id = this.car ? this.car.id : 0;
-        const updatedCar: Car = {
-          id,
+        const id = appStorage.getSelectedCarId();
+        const updatedCar: NewCar = {
+          // id,
           name,
           color,
         };
-        eventEmitter.emit(EventType.UPDATE, updatedCar);
+        appStorage.setNewCar(updatedCar);
+        eventEmitter.emit(EventType.UPDATE, id);
       }
     });
 
-    eventEmitter.subscribe(EventType.SELECT, this.setOldCar.bind(this));
+    eventEmitter.subscribe(EventType.SELECTED_CAR_ID_CHANGE, this.setOldCar.bind(this));
   }
 
-  private setOldCar(oldCar?: Car): void {
+  private setOldCar(): void {
     const inputs = this.controlView.getInputs();
     const nameInput = inputs[ControlInputs.Name].getElement();
     const colorInput = inputs[ControlInputs.Color].getElement();
+
+    const oldCarId = appStorage.getSelectedCarId();
+    const oldCar = appStorage.getCar(oldCarId);
     if (oldCar) {
       if (nameInput instanceof HTMLInputElement && colorInput instanceof HTMLInputElement) {
         nameInput.value = '';

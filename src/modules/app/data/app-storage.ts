@@ -1,4 +1,4 @@
-import { Car, WinnerFull } from '../../types';
+import { Car, NewCar, WinnerFull } from '../../types';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 
 class AppStorage {
@@ -7,6 +7,11 @@ class AppStorage {
   private cars: Car[] = [];
 
   private selectedCarId = 0;
+
+  private newCarData: NewCar = {
+    name: 'New Name',
+    color: '#000000',
+  };
 
   private currentCarsPage = 1;
 
@@ -21,27 +26,30 @@ class AppStorage {
     eventEmitter.emit(EventType.CARS_CHANGE);
   }
 
-  public setCar(car: Car): void {
-    if (car.id >= 0) {
-      if (car.id < this.cars.length) {
-        this.cars[car.id] = car;
-        eventEmitter.emit(EventType.CAR_CHANGE);
-      } else {
-        this.cars.push(car);
-        eventEmitter.emit(EventType.NEW_CAR_CHANGE);
-      }
+  public setCar(newCar: Car): void {
+    const storageIndex = this.cars.findIndex((car) => car.id === newCar.id);
+
+    if (storageIndex !== -1) {
+      this.cars[storageIndex] = { ...newCar };
+      eventEmitter.emit(EventType.CAR_CHANGE, storageIndex);
+    } else {
+      this.cars.push(newCar);
+      eventEmitter.emit(EventType.NEW_CAR_CHANGE, this.cars.length - 1);
     }
   }
 
-  public setWinner(winner: WinnerFull): void {
-    if (winner.id >= 0) {
-      if (winner.id < this.winners.length) {
-        this.winners[winner.id] = winner;
-        eventEmitter.emit(EventType.WINNER_CHANGE);
-      } else {
-        this.winners.push(winner);
-        eventEmitter.emit(EventType.NEW_WINNER_CHANGE);
-      }
+  public setNewCar(newCar: NewCar): void {
+    this.newCarData = newCar;
+  }
+
+  public setWinner(winnerNew: WinnerFull): void {
+    const winnerStorageIndex = this.winners.findIndex((winner) => winner.id === winnerNew.id);
+    if (winnerStorageIndex !== -1) {
+      this.winners[winnerStorageIndex] = { ...winnerNew };
+      eventEmitter.emit(EventType.WINNER_CHANGE, winnerStorageIndex);
+    } else {
+      this.winners.push(winnerNew);
+      eventEmitter.emit(EventType.NEW_WINNER_CHANGE, this.winners.length - 1);
     }
   }
 
@@ -93,8 +101,9 @@ class AppStorage {
   }
 
   public removeWinner(winnerId: number): void {
-    if (winnerId >= 0 && winnerId < this.winners.length) {
-      this.winners.splice(winnerId, 1);
+    if (winnerId >= 0) {
+      const winnerStorageId = this.winners.findIndex((winner) => winner.id === winnerId);
+      this.winners.splice(winnerStorageId, 1);
       eventEmitter.emit(EventType.WINNERS_CHANGE);
     }
   }
@@ -131,6 +140,25 @@ class AppStorage {
     if (carId >= 0 && carId < this.cars.length) {
       return this.cars[carId];
     }
+    return null;
+  }
+
+  public getNewCar(): NewCar {
+    return this.newCarData;
+  }
+
+  public getNewCarWithId(storageId: number): Car | null {
+    const id = this.getCar(storageId)?.id;
+    if (id) {
+      const newCarData = this.getNewCar();
+      const newCar: Car = {
+        id,
+        name: newCarData.name,
+        color: newCarData.color,
+      };
+      return newCar;
+    }
+
     return null;
   }
 

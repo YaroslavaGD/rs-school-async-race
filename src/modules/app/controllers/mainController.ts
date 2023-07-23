@@ -1,5 +1,5 @@
 import MainView from '../view/main/mainView';
-import ApiController from './apiController';
+// import ApiController from './apiController';
 import GarageController from './garageController';
 import WinnersController from './winnersController';
 
@@ -11,9 +11,9 @@ export default class MainController {
 
   private WinnersController: WinnersController;
 
-  constructor(apiController: ApiController) {
+  constructor() {
     // this.apiController = apiController;
-    this.garageController = new GarageController(apiController);
+    this.garageController = new GarageController();
     this.WinnersController = new WinnersController();
     const garageView = this.garageController.getGarageView();
     const winnersView = this.WinnersController.getWinnersView();

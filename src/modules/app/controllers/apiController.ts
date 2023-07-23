@@ -123,7 +123,7 @@ class ApiController {
     }
   }
 
-  public async deleteCar(id: number): Promise<void> {
+  public async removeCar(id: number): Promise<void> {
     try {
       await this.request<void>(`/garage/${id}`, 'DELETE');
     } catch (error) {
@@ -224,6 +224,57 @@ class ApiController {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public async getWinner(id: number): Promise<Winner> {
+    try {
+      const response = await this.request<Winner>(`/winners/${id}`);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to get winner with id ${id}: ${error.message}`);
+      }
+
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public async createWinner(id: number, wins: number, time: number): Promise<Winner> {
+    try {
+      const response = await this.request<Winner>('/winners', 'POST', { id, wins, time });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to create winner with id ${id}: ${error.message}`);
+      }
+
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public async updateWinner(id: number, wins: number, time: number): Promise<Winner> {
+    try {
+      const response = await this.request<Winner>(`/winners/${id}`, 'PUT', { wins, time });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to update winner ${id}: ${error.message}`);
+      }
+
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public async removeWinner(id: number): Promise<void> {
+    try {
+      await this.request<void>(`/winners/${id}`, 'DELETE');
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to delete winner ${id}: ${error.message}`);
+      }
+
       throw new Error('Something went wrong');
     }
   }
