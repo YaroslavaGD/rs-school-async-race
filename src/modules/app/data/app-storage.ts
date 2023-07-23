@@ -93,6 +93,9 @@ class AppStorage {
     if (this.totalWinners >= 0) {
       this.totalWinners = totalNumber;
       eventEmitter.emit(EventType.TOTAL_WINNERS_CHANGE);
+    } else {
+      this.totalWinners = 0;
+      eventEmitter.emit(EventType.TOTAL_WINNERS_CHANGE);
     }
   }
 

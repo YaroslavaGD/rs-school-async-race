@@ -1,6 +1,8 @@
 import { Car, NewCar } from '../../types';
 import appStorage from '../data/app-storage';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
+import ElementCreator from '../utils/element-creator';
+import ButtonView from '../view/button/buttonView';
 import ControlView from '../view/main/garage/control/controlView';
 
 enum ControlButtons {
@@ -19,6 +21,10 @@ enum ControlInputs {
 export default class ControlController {
   private controlView: ControlView = new ControlView();
 
+  private buttons: ButtonView[] = [];
+
+  private inputs: ElementCreator[] = [];
+
   private car: Car | null = null;
 
   constructor() {
@@ -30,16 +36,30 @@ export default class ControlController {
   }
 
   private init(): void {
+    this.setButtons();
+    this.setInputs();
     this.addEventListeners();
   }
 
-  private addEventListeners(): void {
-    const buttons = this.controlView.getButtons();
-    const inputs = this.controlView.getInputs();
+  private setButtons(): void {
+    this.buttons = this.controlView.getButtons();
+  }
 
-    buttons[ControlButtons.Create].getCreator().setCallback(() => {
-      const nameInput = inputs[ControlInputs.Name].getElement();
-      const colorInput = inputs[ControlInputs.Color].getElement();
+  private setInputs(): void {
+    this.inputs = this.controlView.getInputs();
+  }
+
+  private addEventListeners(): void {
+    this.addEventListenerCreate();
+    this.addEventListenerUpdate();
+    this.addEventListenerGenerate();
+    eventEmitter.subscribe(EventType.SELECTED_CAR_ID_CHANGE, this.setOldCar.bind(this));
+  }
+
+  private addEventListenerCreate(): void {
+    this.buttons[ControlButtons.Create].getCreator().setCallback(() => {
+      const nameInput = this.inputs[ControlInputs.Name].getElement();
+      const colorInput = this.inputs[ControlInputs.Color].getElement();
 
       if (nameInput instanceof HTMLInputElement && colorInput instanceof HTMLInputElement) {
         const name = nameInput.value;
@@ -53,10 +73,12 @@ export default class ControlController {
         eventEmitter.emit(EventType.CREATE);
       }
     });
+  }
 
-    buttons[ControlButtons.Update].getCreator().setCallback(() => {
-      const nameInput = inputs[ControlInputs.Name].getElement();
-      const colorInput = inputs[ControlInputs.Color].getElement();
+  private addEventListenerUpdate(): void {
+    this.buttons[ControlButtons.Update].getCreator().setCallback(() => {
+      const nameInput = this.inputs[ControlInputs.Name].getElement();
+      const colorInput = this.inputs[ControlInputs.Color].getElement();
       if (nameInput instanceof HTMLInputElement && colorInput instanceof HTMLInputElement) {
         const name = nameInput.value;
         const color = colorInput.value;
@@ -70,8 +92,12 @@ export default class ControlController {
         eventEmitter.emit(EventType.UPDATE, id);
       }
     });
+  }
 
-    eventEmitter.subscribe(EventType.SELECTED_CAR_ID_CHANGE, this.setOldCar.bind(this));
+  private addEventListenerGenerate(): void {
+    this.buttons[ControlButtons.Generate].getCreator().setCallback(() => {
+      eventEmitter.emit(EventType.GENERATE);
+    });
   }
 
   private setOldCar(): void {

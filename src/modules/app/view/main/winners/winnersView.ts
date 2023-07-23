@@ -2,6 +2,7 @@ import ImgFrog from '../../../../../img/frog1.svg';
 import View from '../../view';
 import { ButtonTypeValue, ElementParams, WinnerFull } from '../../../../types';
 import ElementCreator from '../../../utils/element-creator';
+import appStorage from '../../../data/app-storage';
 
 const CssClasses = {
   WINNERS: 'winners',
@@ -17,7 +18,7 @@ const CssClasses = {
   TABLE_IMG: 'table__img',
 };
 
-const TEXT_HEADER = 'Winners (10)';
+const TEXT_HEADER = 'Winners';
 const TEXT_HEADER_ITEM = {
   NUMBER: 'Number',
   IMG: 'Frog',
@@ -27,6 +28,8 @@ const TEXT_HEADER_ITEM = {
 };
 
 export default class WinnersView extends View {
+  private header: ElementCreator;
+
   private table: ElementCreator;
 
   private tableHeader: ElementCreator;
@@ -39,6 +42,8 @@ export default class WinnersView extends View {
       classesName: [CssClasses.WINNERS, CssClasses.NOT_ACTIVE],
     };
     super(params);
+
+    this.header = this.createHeader();
     this.tableHeader = this.createTableHeader();
     this.tableBody = this.createTableBody();
     this.table = this.createTable();
@@ -62,9 +67,12 @@ export default class WinnersView extends View {
     });
   }
 
+  public setHeader(): void {
+    this.header.setTextContent(`${TEXT_HEADER}(${appStorage.getTotalWinners()})`);
+  }
+
   private configureView(): void {
-    const creatorHeader = this.createHeader();
-    this.elementCreator.addInnerElement(creatorHeader);
+    this.elementCreator.addInnerElement(this.header);
     this.elementCreator.addInnerElement(this.table);
   }
 
@@ -72,7 +80,7 @@ export default class WinnersView extends View {
     const paramsHeader: ElementParams = {
       tag: 'h2',
       classesName: [CssClasses.WINNERS_HEADER],
-      textContent: TEXT_HEADER,
+      textContent: `${TEXT_HEADER}(${appStorage.getTotalWinners()})`,
     };
     const creatorHeader = new ElementCreator(paramsHeader);
     return creatorHeader;

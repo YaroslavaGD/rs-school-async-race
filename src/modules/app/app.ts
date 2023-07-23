@@ -1,9 +1,12 @@
-import { WinnerFull } from '../types';
+import { Car, NewCar, WinnerFull } from '../types';
 import ApiController from './controllers/apiController';
 import HeaderController from './controllers/headerController';
 import MainController from './controllers/mainController';
 import appStorage from './data/app-storage';
+import NAMES from './data/names';
 import { EventType, eventEmitter } from './event-emitter/eventEmitter';
+
+// const NUM_CARS = 100;
 
 export default class App {
   private apiController: ApiController;
@@ -87,6 +90,7 @@ export default class App {
     eventEmitter.subscribe(EventType.UPDATE, this.updateCar.bind(this));
     eventEmitter.subscribe(EventType.CREATE, this.createCar.bind(this));
     eventEmitter.subscribe(EventType.REMOVE, this.removeCar.bind(this));
+    eventEmitter.subscribe(EventType.GENERATE, this.createRandomCars.bind(this));
   }
 
   private setSelectedCarId(carId?: number): void {
@@ -110,13 +114,29 @@ export default class App {
   }
 
   private async createCar(): Promise<void> {
-    console.log('create car - app');
     try {
       const newCar = appStorage.getNewCar();
-      const car = await this.apiController.createCar(newCar.name, newCar.color);
-      appStorage.setCar(car);
+      await this.apiController.createCar(newCar.name, newCar.color);
+      this.loadCars();
+      // appStorage.setCar(car);
     } catch (error) {
       // console.log(error);
+    }
+  }
+
+  private async createRandomCars(): Promise<void> {
+    const newCars = this.generateCars();
+    await Promise.all(newCars.map((newCar) => this.createRandomCar(newCar)));
+    this.loadCars();
+  }
+
+  private async createRandomCar(newCar: NewCar): Promise<Car> {
+    try {
+      const car = await this.apiController.createCar(newCar.name, newCar.color);
+      return car;
+    } catch (error) {
+      // console.log(error);
+      throw Error('creation error');
     }
   }
 
@@ -126,7 +146,8 @@ export default class App {
       if (id !== undefined) {
         try {
           await this.apiController.removeCar(id);
-          appStorage.removeCar(carStorageId);
+          await this.loadCars();
+          // appStorage.removeCar(carStorageId);
         } catch (error) {
           // console.log(error);
         }
@@ -135,10 +156,53 @@ export default class App {
           await this.apiController.getWinner(id);
           await this.apiController.removeWinner(id);
           appStorage.removeWinner(id);
+          appStorage.setTotalWinners(appStorage.getTotalWinners() - 1);
         } catch (error) {
           // console.log(error);
         }
       }
     }
+  }
+
+  private generateCars(): NewCar[] {
+    let cars: NewCar[] = [];
+    const firstArr = NAMES.first;
+    const secondArr = NAMES.second;
+
+    firstArr.forEach((firstName) => {
+      secondArr.forEach((secondName) => {
+        const car = this.generateCar(`${firstName} ${secondName}`);
+        cars.push(car);
+      });
+    });
+
+    cars = this.shuffleRandomArray(cars);
+    return cars;
+  }
+
+  private generateCar(name: string): NewCar {
+    const color = this.getRandomColor();
+    return { name, color };
+  }
+
+  private shuffleRandomArray<T>(arr: T[]): T[] {
+    const resultArr = [...arr];
+
+    for (let i = resultArr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [resultArr[i], resultArr[j]] = [resultArr[j], resultArr[i]];
+    }
+
+    return resultArr;
+  }
+
+  private getRandomColor(): string {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i += 1) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 }

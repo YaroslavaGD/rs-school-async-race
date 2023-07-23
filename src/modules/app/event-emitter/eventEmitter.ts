@@ -7,6 +7,7 @@ export enum EventType {
   UPDATE,
   REMOVE,
   SELECT,
+  GENERATE,
   CAR_CHANGE,
   NEW_CAR_CHANGE,
   CARS_CHANGE,
