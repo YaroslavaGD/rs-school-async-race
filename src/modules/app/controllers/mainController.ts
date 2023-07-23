@@ -14,7 +14,7 @@ export default class MainController {
   constructor(apiController: ApiController) {
     // this.apiController = apiController;
     this.garageController = new GarageController(apiController);
-    this.WinnersController = new WinnersController(apiController);
+    this.WinnersController = new WinnersController();
     const garageView = this.garageController.getGarageView();
     const winnersView = this.WinnersController.getWinnersView();
     this.mainView = new MainView(garageView, winnersView);

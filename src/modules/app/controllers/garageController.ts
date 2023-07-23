@@ -1,5 +1,6 @@
 // import { Callback, Car } from '../../../types';
 import { Car } from '../../types';
+import appStorage from '../data/app-storage';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 import GarageView from '../view/main/garage/garageView';
 import ApiController from './apiController';
@@ -46,13 +47,21 @@ export default class GarageController {
     }
   }
 
+  private updateCars(): void {
+    const cars = appStorage.getCars();
+    this.membersController?.updateCars(cars);
+  }
+
   private addEventListeners(): void {
     const garage = this.garageView;
     eventEmitter.subscribe(EventType.TO_GARAGE, garage.setActive.bind(garage));
     eventEmitter.subscribe(EventType.TO_WINNERS, garage.setInactive.bind(garage));
+
     eventEmitter.subscribe(EventType.CREATE, this.createNewCar.bind(this));
     eventEmitter.subscribe(EventType.UPDATE, this.updateCar.bind(this));
     eventEmitter.subscribe(EventType.REMOVE, this.removeCar.bind(this));
+
+    eventEmitter.subscribe(EventType.CARS_CHANGE, this.updateCars.bind(this));
   }
 
   private async createNewCarServer(newCar?: Car): Promise<void> {

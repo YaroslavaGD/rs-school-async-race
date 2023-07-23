@@ -1,71 +1,75 @@
+import { WinnerFull } from '../types';
 import ApiController from './controllers/apiController';
 import HeaderController from './controllers/headerController';
 import MainController from './controllers/mainController';
+import appStorage from './data/app-storage';
 
 export default class App {
   private apiController: ApiController;
 
+  private headerController: HeaderController | null = null;
+
+  private mainController: MainController | null = null;
+
   constructor() {
     this.apiController = new ApiController();
-    this.createView();
   }
 
   public async run(): Promise<void> {
-    // try {
-    //   const car = await this.apiController.getCar(1);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // console.log('получение списка машин на первой странице');
-    // try {
-    //   const cars = await this.apiController.getCars(1);
-    //   console.log(cars);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // console.log('создание новой машины');
-    // try {
-    //   const car = await this.apiController.createCar('Tesla Model S', 'red');
-    //   console.log(car);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // console.log('обновление атрибутов машины');
-    // try {
-    //   const car = await this.apiController.updateCar(6, 'Ford Mustang', 'blue');
-    //   console.log(car);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // console.log('удаление машины с указанным id');
-    // try {
-    //   await this.apiController.deleteCar(6);
-    //   console.log('Car deleted successfully');
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    this.setStorage();
+    this.createView();
+    // console.log(appStorage);
   }
 
-  private async createView(): Promise<void> {
-    const headerController = new HeaderController();
-    const header = headerController.getView().getHTMLElement();
+  private createView(): void {
+    this.createHeaderView();
+    this.createMainView();
+  }
 
-    // const mainController = new MainController(this.apiController);
-    // const main = mainController.getView().getHTMLElement();
-
+  private createHeaderView(): void {
+    this.headerController = new HeaderController();
+    const header = this.headerController.getView().getHTMLElement();
     document.body.append(header);
-
-    try {
-      await this.createMain();
-    } catch (error) {
-      console.log(error);
-    }
-    // document.body.append(main);
   }
 
-  private async createMain(): Promise<void> {
-    const mainController = new MainController(this.apiController);
-    const main = mainController.getView().getHTMLElement();
+  private createMainView(): void {
+    this.mainController = new MainController(this.apiController);
+    const main = this.mainController.getView().getHTMLElement();
     document.body.append(main);
+  }
+
+  private async setStorage(): Promise<void> {
+    this.loadCars();
+    this.loadWinners();
+  }
+
+  private async loadCars(): Promise<void> {
+    const currentPage = appStorage.getCurrentCarsPage();
+    const carsData = await this.apiController.getCarsNew(currentPage);
+    appStorage.setCars(carsData.cars);
+    appStorage.setTotalsCars(carsData.total);
+  }
+
+  private async loadWinners(): Promise<void> {
+    const currentPage = appStorage.getCurrentWinnersPage();
+    const winnersData = await this.apiController.getWinnersNew(currentPage);
+    const { total } = winnersData;
+
+    const { winners } = winnersData;
+    const cars = await Promise.all(winners.map((winner) => this.apiController.getCar(winner.id)));
+
+    const winnersFull = winners.map((winner, i) => {
+      const winnerFull: WinnerFull = {
+        id: winner.id,
+        name: cars[i].name,
+        color: cars[i].color,
+        wins: winner.wins,
+        time: winner.time,
+      };
+
+      return winnerFull;
+    });
+    appStorage.setWinners(winnersFull);
+    appStorage.setTotalWinners(total);
   }
 }

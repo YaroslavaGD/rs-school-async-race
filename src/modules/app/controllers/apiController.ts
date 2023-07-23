@@ -1,19 +1,6 @@
-import { Car, Winner } from '../../types';
+import { Car, CarsData, Winner, WinnersData } from '../../types';
 
 const BASE_URL = 'http://localhost:3000';
-
-// interface Car {
-//   id: number;
-//   name: string;
-//   color: string;
-// }
-
-// interface Winner {
-//   id: number;
-//   carId: number;
-//   wins: number;
-//   time: number;
-// }
 
 class ApiController {
   private baseUrl: string;
@@ -63,6 +50,36 @@ class ApiController {
         throw new Error(`Failed to get cars: ${error.message}`);
       }
 
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public async getCarsNew(page: number): Promise<CarsData> {
+    try {
+      const options: RequestInit = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const url = `/garage?_page=${page}&_limit=7`;
+      const response = await fetch(`${this.baseUrl}${url}`, options);
+
+      if (!response.ok) {
+        const errorData: { message?: string } = await response.json();
+        throw new Error(errorData.message || 'Something went wrong');
+      }
+      const total = Number(response.headers.get('X-Total-Count'));
+      const cars: Car[] = await response.json();
+      const carsData: CarsData = {
+        total,
+        cars,
+      };
+      return carsData;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
       throw new Error('Something went wrong');
     }
   }
@@ -177,6 +194,36 @@ class ApiController {
         throw new Error(`Failed to get winners: ${error.message}`);
       }
 
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public async getWinnersNew(page: number): Promise<WinnersData> {
+    try {
+      const options: RequestInit = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const url = `/winners?_page=${page}&_limit=10`;
+      const response = await fetch(`${this.baseUrl}${url}`, options);
+
+      if (!response.ok) {
+        const errorData: { message?: string } = await response.json();
+        throw new Error(errorData.message || 'Something went wrong');
+      }
+      const total = Number(response.headers.get('X-Total-Count'));
+      const winners: Winner[] = await response.json();
+      const winnersData: WinnersData = {
+        total,
+        winners,
+      };
+      return winnersData;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
       throw new Error('Something went wrong');
     }
   }
