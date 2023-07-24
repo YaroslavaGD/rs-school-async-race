@@ -1,7 +1,8 @@
-import { Car, Engine, NewCar, WinnerFull } from '../types';
+import { Car, Engine, NewCar, Winner, WinnerFull } from '../types';
 import ApiController from './controllers/apiController';
 import HeaderController from './controllers/headerController';
 import MainController from './controllers/mainController';
+import ModalController from './controllers/modalController';
 import appStorage from './data/app-storage';
 import NAMES from './data/names';
 import { EventType, eventEmitter } from './event-emitter/eventEmitter';
@@ -14,6 +15,10 @@ export default class App {
   private headerController: HeaderController | null = null;
 
   private mainController: MainController | null = null;
+
+  private modalController: ModalController | null = null;
+
+  private isWinner = false;
 
   constructor() {
     this.apiController = new ApiController();
@@ -28,6 +33,7 @@ export default class App {
   private createView(): void {
     this.createHeaderView();
     this.createMainView();
+    this.createModalView();
   }
 
   private createHeaderView(): void {
@@ -39,6 +45,12 @@ export default class App {
   private createMainView(): void {
     this.mainController = new MainController();
     const main = this.mainController.getView().getHTMLElement();
+    document.body.append(main);
+  }
+
+  private createModalView(): void {
+    this.modalController = new ModalController();
+    const main = this.modalController.getView().getHTMLElement();
     document.body.append(main);
   }
 
@@ -93,6 +105,11 @@ export default class App {
     eventEmitter.subscribe(EventType.GENERATE, this.createRandomCars.bind(this));
     eventEmitter.subscribe(EventType.REQUEST_VELOCITY, this.setEngineData.bind(this));
     eventEmitter.subscribe(EventType.REQUEST_STOP, this.stopDriveCar.bind(this));
+    eventEmitter.subscribe(EventType.RASE, this.startRace.bind(this));
+  }
+
+  private startRace(): void {
+    this.isWinner = false;
   }
 
   private setSelectedCarId(carId?: number): void {
@@ -209,7 +226,6 @@ export default class App {
   }
 
   private async setEngineData(carStorageId?: number): Promise<void> {
-    console.log('setEngine');
     if (carStorageId !== undefined) {
       const car = appStorage.getCar(carStorageId);
       if (car) {
@@ -228,10 +244,49 @@ export default class App {
     const car = appStorage.getCar(carsStorageId);
     if (car) {
       try {
-        const raceResult = await this.apiController.startRace(car.id);
-        console.log(raceResult);
+        const startTime = performance.now();
+        await this.apiController.startRace(car.id);
+        const endTime = performance.now();
+
+        if (!this.isWinner) {
+          this.isWinner = true;
+          console.log('winner');
+          console.log(carsStorageId);
+          const responseTime = (endTime - startTime) / 1000;
+          console.log('Response Time for Winner (s):', responseTime);
+          await this.setWinner(carsStorageId, responseTime);
+          eventEmitter.emit(EventType.WIN, carsStorageId);
+          this.loadWinners();
+        }
       } catch (error) {
         eventEmitter.emit(EventType.CAR_BROKEN, carsStorageId);
+      }
+    }
+  }
+
+  private async setWinner(carStorageId: number, time: number): Promise<void> {
+    const car = appStorage.getCar(carStorageId);
+    let isNew = false;
+    if (car) {
+      let winner: Winner | null = null;
+      try {
+        winner = await this.apiController.getWinner(car.id);
+        winner.time = time;
+        winner.wins += 1;
+        isNew = false;
+      } catch (error) {
+        winner = {
+          id: car.id,
+          time,
+          wins: 1,
+        };
+        isNew = true;
+      }
+
+      if (isNew) {
+        this.apiController.createWinner(winner.id, winner.wins, winner.time);
+      } else {
+        this.apiController.updateWinner(winner.id, winner.wins, winner.time);
       }
     }
   }

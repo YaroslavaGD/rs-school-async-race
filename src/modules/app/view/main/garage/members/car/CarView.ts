@@ -36,6 +36,8 @@ export default class CarView extends View {
 
   private carButtons: ButtonView[];
 
+  private animationFrameId: number | null = null;
+
   constructor(id: number, car: Car) {
     const params: ElementParams = {
       tag: 'li',
@@ -71,7 +73,7 @@ export default class CarView extends View {
     this.carData.engine = engine;
   }
 
-  public animateCar(): void {
+  public animateCarOld(): void {
     this.elementCreator.setClasses(['animate-race']);
     if (this.carImageView) {
       this.carImageView.setActive();
@@ -98,12 +100,105 @@ export default class CarView extends View {
     }
   }
 
+  public animateCar(): void {
+    this.elementCreator.setClasses(['animate-race']);
+    if (this.carImageView) {
+      this.carImageView.setActive();
+      const imageHtml = this.carImageView.getCreator().getElement();
+      const distance = appStorage.getCurrentDistance() - 50;
+      const velocity = this.carData.engine?.velocity;
+      const actualDistance = this.carData.engine?.distance;
+
+      if (velocity !== undefined && actualDistance !== undefined) {
+        const startTime = performance.now();
+        const animationDuration = actualDistance / velocity;
+
+        const animateFrame = (timestamp: number): void => {
+          if (this.animationFrameId === null) return; // Если анимация прервана, выходим из функции
+
+          const elapsed = timestamp - startTime;
+          const progress = Math.min(elapsed / animationDuration, 1);
+          const transformValue = `translate(${distance * progress}px) rotate(${progress * 359}deg)`;
+          imageHtml.style.transform = transformValue;
+
+          if (progress < 1) {
+            // Если анимация не завершена и не прервана, вызываем следующий кадр
+            this.animationFrameId = requestAnimationFrame(animateFrame);
+          } else {
+            // Анимация завершена
+            this.carImageView?.setStop();
+          }
+        };
+
+        // Запускаем анимацию, вызывая первый кадр
+        this.animationFrameId = requestAnimationFrame(animateFrame);
+      }
+    }
+  }
+
+  // public animateCar(): void {
+  //   this.elementCreator.setClasses(['animate-race']);
+  //   if (this.carImageView) {
+  //     this.carImageView.setActive();
+  //     const imageHtml = this.carImageView.getCreator().getElement();
+  //     const distance = appStorage.getCurrentDistance() - 50;
+  //     const velocity = this.carData.engine?.velocity;
+  //     const actualDistance = this.carData.engine?.distance;
+
+  //     if (velocity !== undefined && actualDistance !== undefined) {
+  //       const startTime = performance.now();
+  //       const animationDuration = actualDistance / velocity;
+
+  //       const animateFrame = (timestamp: number): void => {
+  //         const elapsed = timestamp - startTime;
+  //         const progress = Math.min(elapsed / animationDuration, 1);
+  //         const transformValue = `translate(${distance * progress}px) rotate(${progress * 359}deg)`;
+  //         imageHtml.style.transform = transformValue;
+
+  //         if (progress < 1) {
+  //           // Если анимация не завершена, вызываем следующий кадр
+  //           requestAnimationFrame(animateFrame);
+  //         } else {
+  //           // Анимация завершена
+  //           this.carImageView?.setStop();
+  //         }
+  //       };
+
+  //       // Запускаем анимацию, вызывая первый кадр
+  //       requestAnimationFrame(animateFrame);
+  //     }
+  //   }
+  // }
+
+  public brokeCarOld(): void {
+    this.elementCreator.setClasses(['animate-race', 'pause']);
+    if (this.carImageView) {
+      this.carImageView.setBroke();
+      const imageHtml = this.carImageView.getCreator().getElement();
+
+      imageHtml.getAnimations({ subtree: true }).map((animation) => animation.pause());
+    }
+  }
+
+  public stopCarOld(): void {
+    this.elementCreator.removeClasses('animate-race');
+    this.elementCreator.removeClasses('pause');
+    if (this.carImageView) {
+      this.carImageView.setStop();
+      const imageHtml = this.carImageView.getCreator().getElement();
+
+      Promise.all(imageHtml.getAnimations({ subtree: true }).map((animation) => animation.cancel()));
+      imageHtml.style.transform = 'translate(0) rotate(0deg)';
+    }
+  }
+
   public brokeCar(): void {
     this.elementCreator.setClasses(['animate-race', 'pause']);
     if (this.carImageView) {
       this.carImageView.setBroke();
       const imageHtml = this.carImageView.getCreator().getElement();
 
+      this.animationFrameId = null; // Прерываем текущую анимацию
       imageHtml.getAnimations({ subtree: true }).map((animation) => animation.pause());
     }
   }
@@ -115,6 +210,7 @@ export default class CarView extends View {
       this.carImageView.setStop();
       const imageHtml = this.carImageView.getCreator().getElement();
 
+      this.animationFrameId = null; // Прерываем текущую анимацию
       Promise.all(imageHtml.getAnimations({ subtree: true }).map((animation) => animation.cancel()));
       imageHtml.style.transform = 'translate(0) rotate(0deg)';
     }

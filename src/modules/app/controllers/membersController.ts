@@ -51,6 +51,7 @@ export default class MembersController {
   }
 
   private async driveCars(): Promise<void> {
+    this.setCurrentDistance();
     Promise.race(this.carsController.map((car) => car.setDriveMode()));
   }
 
@@ -59,7 +60,6 @@ export default class MembersController {
   }
 
   private driveCar(carId?: number): void {
-    console.log('drive car');
     if (carId !== undefined) {
       const engine = appStorage.getEngine(carId);
       if (engine) {
@@ -121,9 +121,9 @@ export default class MembersController {
   }
 
   private setCurrentDistance(): void {
-    const distance = this.membersView.getHTMLElement().clientWidth;
-    console.log('Текущее расстояние:');
-    console.log(distance);
-    appStorage.setCurrentDistance(distance);
+    const distance = this.membersView.getHTMLElement().parentElement?.offsetWidth;
+    if (distance !== undefined) {
+      appStorage.setCurrentDistance(distance);
+    }
   }
 }

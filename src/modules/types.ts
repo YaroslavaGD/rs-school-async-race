@@ -63,7 +63,7 @@ export interface Engine {
 
 export interface Winner {
   id: number;
-  carId: number;
+  // carId: number;
   wins: number;
   time: number;
 }

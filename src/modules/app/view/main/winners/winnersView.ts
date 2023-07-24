@@ -1,8 +1,9 @@
-import ImgFrog from '../../../../../img/frog1.svg';
+// import ImgFrog from '../../../../../img/frog1.svg';
 import View from '../../view';
 import { ButtonTypeValue, ElementParams, WinnerFull } from '../../../../types';
 import ElementCreator from '../../../utils/element-creator';
 import appStorage from '../../../data/app-storage';
+import ImageCarView from '../../imageCar/imageCarView';
 
 const CssClasses = {
   WINNERS: 'winners',
@@ -116,13 +117,16 @@ export default class WinnersView extends View {
 
     if (type === 'table-img') {
       const paramsImg: ElementParams = {
-        tag: 'img',
+        tag: 'div',
         classesName: [CssClasses.TABLE_IMG],
       };
       const creatorImg = new ElementCreator(paramsImg);
-      creatorImg.getElement().setAttribute('src', ImgFrog);
+      // creatorImg.getElement().setAttribute('src', ImgFrog);
       if (color) {
-        creatorImg.getElement().setAttribute('alt', color);
+        const newImg: ImageCarView = new ImageCarView(color);
+        newImg.setStop();
+        creatorImg.addInnerElement(newImg.getCreator());
+        // creatorImg.getElement().setAttribute('alt', color);
       }
       creatorColumn.addInnerElement(creatorImg);
     } else {
