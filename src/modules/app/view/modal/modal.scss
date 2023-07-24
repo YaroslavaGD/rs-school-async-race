@@ -74,3 +74,9 @@
   //   display: block
   // }
 }
+
+@media (max-width: 1000px) {
+  .app-modal__window {
+    max-width: 80%;
+  }
+}

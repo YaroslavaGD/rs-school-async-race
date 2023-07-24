@@ -19,8 +19,8 @@ const CssClasses = {
 
 const TEXT_BUTTONS = {
   UPDATE: 'U',
-  REMOVE: 'R',
-  SELECT: 'S',
+  REMOVE: '-',
+  SELECT: '✓',
   DRIVE: 'A',
   STOP: 'B',
 };

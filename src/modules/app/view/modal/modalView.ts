@@ -36,7 +36,6 @@ export default class ModalView extends View {
   }
 
   public onWin(carId?: number): void {
-    console.log('on win');
     if (carId !== undefined) {
       const car = appStorage.getCar(carId);
       if (car) {

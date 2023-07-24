@@ -97,14 +97,12 @@ export default class ControlController {
   }
 
   private addEventListenerRace(): void {
-    console.log('RACE');
     this.buttons[ControlButtons.Race].getCreator().setCallback(() => {
       eventEmitter.emit(EventType.RASE);
     });
   }
 
   private addEventListenerReset(): void {
-    console.log('RESET');
     this.buttons[ControlButtons.Reset].getCreator().setCallback(() => {
       eventEmitter.emit(EventType.RESET);
     });

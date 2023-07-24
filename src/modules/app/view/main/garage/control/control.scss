@@ -1,7 +1,44 @@
 .control-main {
+  // display: flex;
+  // align-items: center;
   &__item {
     padding: 0.5em 1em;
     cursor: pointer;
+    min-width: 150px;
     background-color: rgba(255,255,255,.5);
   }
+
+  &__item + &__item {
+    margin-left: 15px;
+  }
+}
+
+.control-element {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0;
+  // margin-right: 40px;
+  margin-bottom: 20px;
+  padding: 0;
+
+  &__color,
+  &__name {
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__name {
+    margin-bottom: 15px;
+  }
+
+  &__input-color,
+  &__input-name {
+    display: block;
+    flex-grow: 1;
+    height: auto;
+    margin-right: 10px;
+  }
+
 }

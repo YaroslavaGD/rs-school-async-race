@@ -271,7 +271,9 @@ export default class App {
       let winner: Winner | null = null;
       try {
         winner = await this.apiController.getWinner(car.id);
-        winner.time = time;
+        if (winner.time > time) {
+          winner.time = time;
+        }
         winner.wins += 1;
         isNew = false;
       } catch (error) {
