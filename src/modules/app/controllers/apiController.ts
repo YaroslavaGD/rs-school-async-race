@@ -1,4 +1,4 @@
-import { Car, CarsData, Winner, WinnersData } from '../../types';
+import { Car, CarsData, Engine, Winner, WinnersData } from '../../types';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -135,22 +135,22 @@ class ApiController {
     }
   }
 
-  public async startEngine(id: number): Promise<Car> {
+  public async startEngine(id: number): Promise<Engine> {
     try {
-      const response = await this.request<Car>(`/engine?id=${id}&status=started`);
+      const response = await this.request<Engine>(`/engine?id=${id}&status=started`, 'PATCH');
       return response;
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Failed to start engine: ${error.message}`);
+        throw new Error(`Failed to start engine ${id}: ${error.message}`);
       }
 
       throw new Error('Something went wrong');
     }
   }
 
-  public async stopEngine(id: number): Promise<Car> {
+  public async stopEngine(id: number): Promise<Engine> {
     try {
-      const response = await this.request<Car>(`/engine?id=${id}&status=stopped`);
+      const response = await this.request<Engine>(`/engine?id=${id}&status=stopped`, 'PATCH');
       return response;
     } catch (error) {
       if (error instanceof Error) {
@@ -161,9 +161,9 @@ class ApiController {
     }
   }
 
-  public async startRace(): Promise<void> {
+  public async startRace(id: number): Promise<void> {
     try {
-      await this.request<void>('engine', 'POST', { status: 'drive' });
+      await this.request<void>(`/engine?id=${id}&status=drive`, 'PATCH');
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Failed to start race: ${error.message}`);

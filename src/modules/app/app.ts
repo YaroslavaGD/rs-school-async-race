@@ -1,4 +1,4 @@
-import { Car, NewCar, WinnerFull } from '../types';
+import { Car, Engine, NewCar, WinnerFull } from '../types';
 import ApiController from './controllers/apiController';
 import HeaderController from './controllers/headerController';
 import MainController from './controllers/mainController';
@@ -91,6 +91,8 @@ export default class App {
     eventEmitter.subscribe(EventType.CREATE, this.createCar.bind(this));
     eventEmitter.subscribe(EventType.REMOVE, this.removeCar.bind(this));
     eventEmitter.subscribe(EventType.GENERATE, this.createRandomCars.bind(this));
+    eventEmitter.subscribe(EventType.REQUEST_VELOCITY, this.setEngineData.bind(this));
+    eventEmitter.subscribe(EventType.REQUEST_STOP, this.stopDriveCar.bind(this));
   }
 
   private setSelectedCarId(carId?: number): void {
@@ -204,5 +206,48 @@ export default class App {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  private async setEngineData(carStorageId?: number): Promise<void> {
+    console.log('setEngine');
+    if (carStorageId !== undefined) {
+      const car = appStorage.getCar(carStorageId);
+      if (car) {
+        try {
+          const engineData: Engine = await this.apiController.startEngine(car.id);
+          appStorage.updateEngine(carStorageId, engineData);
+          this.startDriveCar(carStorageId);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  }
+
+  private async startDriveCar(carsStorageId: number): Promise<void> {
+    const car = appStorage.getCar(carsStorageId);
+    if (car) {
+      try {
+        const raceResult = await this.apiController.startRace(car.id);
+        console.log(raceResult);
+      } catch (error) {
+        eventEmitter.emit(EventType.CAR_BROKEN, carsStorageId);
+      }
+    }
+  }
+
+  private async stopDriveCar(carsStorageId?: number): Promise<void> {
+    if (carsStorageId !== undefined) {
+      const car = appStorage.getCar(carsStorageId);
+      if (car) {
+        try {
+          const engine = await this.apiController.stopEngine(car.id);
+          appStorage.updateEngine(carsStorageId, engine);
+          // eventEmitter.emit(EventType.CAR_STOP, carsStorageId);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
   }
 }

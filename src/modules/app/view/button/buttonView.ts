@@ -17,4 +17,12 @@ export default class ButtonView extends View {
   public getCreator(): ElementCreator {
     return this.elementCreator;
   }
+
+  public setDisabled(isDisabled: boolean): void {
+    if (isDisabled) {
+      this.getHTMLElement().setAttribute('disabled', isDisabled.toString());
+    } else {
+      this.getHTMLElement().removeAttribute('disabled');
+    }
+  }
 }

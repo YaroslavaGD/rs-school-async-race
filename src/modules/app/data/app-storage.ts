@@ -1,4 +1,4 @@
-import { Car, NewCar, WinnerFull } from '../../types';
+import { Car, Engine, NewCar, WinnerFull } from '../../types';
 import { EventType, eventEmitter } from '../event-emitter/eventEmitter';
 
 class AppStorage {
@@ -20,6 +20,8 @@ class AppStorage {
   private totalCars = 0;
 
   private totalWinners = 0;
+
+  private currentDistance = 1800;
 
   public setCars(cars: Car[]): void {
     this.cars = [...cars];
@@ -99,9 +101,19 @@ class AppStorage {
     }
   }
 
-  public removeCar(carId: number): void {
-    if (carId >= 0 && carId < this.cars.length) {
-      this.cars.splice(carId, 1);
+  public setCurrentDistance(distance: number): void {
+    if (distance >= 0) {
+      this.currentDistance = distance;
+    }
+  }
+
+  public getCurrentDistance(): number {
+    return this.currentDistance;
+  }
+
+  public removeCar(carStorageId: number): void {
+    if (this.isStorageId(carStorageId)) {
+      this.cars.splice(carStorageId, 1);
       eventEmitter.emit(EventType.CARS_CHANGE);
     }
   }
@@ -142,9 +154,9 @@ class AppStorage {
     return this.totalWinners;
   }
 
-  public getCar(carId: number): Car | null {
-    if (carId >= 0 && carId < this.cars.length) {
-      return this.cars[carId];
+  public getCar(carStorageId: number): Car | null {
+    if (this.isStorageId(carStorageId)) {
+      return this.cars[carStorageId];
     }
     return null;
   }
@@ -173,6 +185,29 @@ class AppStorage {
       return this.winners[winnerId];
     }
     return null;
+  }
+
+  public getEngine(carStorageId: number): Engine | undefined {
+    if (this.isStorageId(carStorageId)) {
+      return this.cars[carStorageId].engine;
+    }
+
+    return undefined;
+  }
+
+  public updateEngine(carStorageId: number, engine: Engine): void {
+    if (this.isStorageId(carStorageId)) {
+      this.cars[carStorageId].engine = { ...engine };
+      if (this.cars[carStorageId].engine?.velocity !== 0) {
+        eventEmitter.emit(EventType.ENGINE_READY, carStorageId);
+      } else {
+        eventEmitter.emit(EventType.CAR_STOP, carStorageId);
+      }
+    }
+  }
+
+  private isStorageId(id: number): boolean {
+    return id >= 0 && id < this.cars.length;
   }
 }
 

@@ -19,19 +19,25 @@ export enum EventType {
   CURRENT_WINNERS_PAGE_CHANGE,
   TOTAL_CARS_CHANGE,
   TOTAL_WINNERS_CHANGE,
+  REQUEST_VELOCITY,
+  REQUEST_DRIVE,
+  REQUEST_STOP,
+  ENGINE_READY,
+  CAR_BROKEN,
+  CAR_STOP,
 }
 
 export const eventEmitter: {
   readonly events: Record<string, (() => void)[]>;
-  emit(eventType: EventType, strorageCarId?: number): void;
-  subscribe(eventType: EventType, callback: (strorageCarId?: number) => void): void;
+  emit(eventType: EventType, storageCarId?: number): void;
+  subscribe(eventType: EventType, callback: (storageCarId?: number) => void): void;
   unsubscribe(eventType: EventType): void;
 } = {
   events: {},
 
-  emit(eventName, strorageCarId) {
+  emit(eventName, storageCarId) {
     if (!this.events[eventName]) return;
-    this.events[eventName].forEach((callback: (strorageCarId?: number) => void) => callback(strorageCarId));
+    this.events[eventName].forEach((callback: (storageCarId?: number) => void) => callback(storageCarId));
   },
 
   subscribe(eventName, callback) {

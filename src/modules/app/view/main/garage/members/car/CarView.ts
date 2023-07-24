@@ -1,4 +1,5 @@
-import { Car, ElementParams } from '../../../../../../types';
+import { Car, ElementParams, Engine } from '../../../../../../types';
+import appStorage from '../../../../../data/app-storage';
 import ElementCreator from '../../../../../utils/element-creator';
 import ButtonView from '../../../../button/buttonView';
 import ImageCarView from '../../../../imageCar/imageCarView';
@@ -66,6 +67,57 @@ export default class CarView extends View {
     this.updateName();
   }
 
+  public updateCarEngine(engine: Engine): void {
+    this.carData.engine = engine;
+  }
+
+  public animateCar(): void {
+    this.elementCreator.setClasses(['animate-race']);
+    if (this.carImageView) {
+      this.carImageView.setActive();
+      const imageHtml = this.carImageView.getCreator().getElement();
+      const distance = appStorage.getCurrentDistance() - 70;
+      const velocity = this.carData.engine?.velocity;
+      const actualDistance = this.carData.engine?.distance;
+      console.log('animation distance');
+      console.log(distance);
+      if (velocity !== undefined && actualDistance !== undefined) {
+        const animation = imageHtml.animate(
+          [{ transform: 'translate(0) rotate(0deg)' }, { transform: `translate(${distance}px) rotate(359deg)` }],
+          {
+            duration: actualDistance / velocity,
+            fill: 'forwards',
+          },
+        );
+
+        animation.addEventListener('finish', () => {
+          this.carImageView?.setStop();
+        });
+      }
+    }
+  }
+
+  public brokeCar(): void {
+    this.elementCreator.setClasses(['animate-race', 'pause']);
+    if (this.carImageView) {
+      this.carImageView.setBroke();
+      const imageHtml = this.carImageView.getCreator().getElement();
+
+      imageHtml.getAnimations({ subtree: true }).map((animation) => animation.pause());
+    }
+  }
+
+  public stopCar(): void {
+    this.elementCreator.removeClasses('animate-race');
+    this.elementCreator.removeClasses('pause');
+    if (this.carImageView) {
+      this.carImageView.setStop();
+      const imageHtml = this.carImageView.getCreator().getElement();
+
+      imageHtml.getAnimations({ subtree: true }).map((animation) => animation.cancel());
+    }
+  }
+
   private updateId(): void {
     this.elementCreator.setDataId(this.carData.id);
   }
@@ -112,6 +164,7 @@ export default class CarView extends View {
     const creatorRemoveButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.REMOVE, 'remove-element');
     const creatorDriveButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.DRIVE, 'drive');
     const creatorStopButton = new ButtonView(CssClasses.CAR_BUTTON, TEXT_BUTTONS.STOP, 'stop');
+    creatorStopButton.setDisabled(true);
 
     this.carButtons.push(creatorSelectButton);
     this.carButtons.push(creatorRemoveButton);

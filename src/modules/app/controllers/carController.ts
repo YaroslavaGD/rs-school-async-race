@@ -41,11 +41,17 @@ export default class CarController {
     });
 
     buttons[CarButtons.DRIVE].getCreator().setCallback(() => {
-      console.log('drive');
+      console.log('drive-mode');
+      buttons[CarButtons.DRIVE].setDisabled(true);
+      buttons[CarButtons.STOP].setDisabled(false);
+      eventEmitter.emit(EventType.REQUEST_VELOCITY, this.carView.getId());
     });
 
     buttons[CarButtons.STOP].getCreator().setCallback(() => {
       console.log('stop');
+      buttons[CarButtons.DRIVE].setDisabled(false);
+      buttons[CarButtons.STOP].setDisabled(true);
+      eventEmitter.emit(EventType.REQUEST_STOP, this.carView.getId());
     });
   }
 }
