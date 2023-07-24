@@ -29,5 +29,19 @@ export default class WinnersController {
     eventEmitter.subscribe(EventType.TO_GARAGE, winners.setInactive.bind(winners));
     eventEmitter.subscribe(EventType.TOTAL_WINNERS_CHANGE, winners.setHeader.bind(winners));
     eventEmitter.subscribe(EventType.WINNERS_CHANGE, this.updateWinners.bind(this));
+    eventEmitter.subscribe(EventType.CURRENT_WINNERS_PAGE_CHANGE, this.winnersView.setPage.bind(this.winnersView));
+    this.winnersView
+      .getPrevButton()
+      .getCreator()
+      .setCallback(() => {
+        eventEmitter.emit(EventType.PREV_WINS);
+      });
+
+    this.winnersView
+      .getNextButton()
+      .getCreator()
+      .setCallback(() => {
+        eventEmitter.emit(EventType.NEXT_WINS);
+      });
   }
 }

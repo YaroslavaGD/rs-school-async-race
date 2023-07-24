@@ -108,6 +108,8 @@ export default class App {
     eventEmitter.subscribe(EventType.RASE, this.startRace.bind(this));
     eventEmitter.subscribe(EventType.PREV_CARS, this.prevCarPage.bind(this));
     eventEmitter.subscribe(EventType.NEXT_CARS, this.nextCarPage.bind(this));
+    eventEmitter.subscribe(EventType.PREV_WINS, this.prevWinPage.bind(this));
+    eventEmitter.subscribe(EventType.NEXT_WINS, this.nextWinPage.bind(this));
   }
 
   private startRace(): void {
@@ -323,6 +325,23 @@ export default class App {
     if (page < totalPages) {
       appStorage.setCurrentCarsPage(page + 1);
       this.loadCars();
+    }
+  }
+
+  private async prevWinPage(): Promise<void> {
+    const page = appStorage.getCurrentWinnersPage();
+    if (page > 1) {
+      appStorage.setCurrentWinnersPage(page - 1);
+      this.loadWinners();
+    }
+  }
+
+  private async nextWinPage(): Promise<void> {
+    const page = appStorage.getCurrentWinnersPage();
+    const totalPages = Math.ceil(appStorage.getTotalWinners() / 10);
+    if (page < totalPages) {
+      appStorage.setCurrentWinnersPage(page + 1);
+      this.loadWinners();
     }
   }
 }

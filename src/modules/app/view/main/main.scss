@@ -4,5 +4,22 @@
 }
 
 .winners {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  &__button {
+    cursor: pointer;
+  }
+
+  &__page {
+    margin: 0;
+    padding: 0 20px;
+  }
 }

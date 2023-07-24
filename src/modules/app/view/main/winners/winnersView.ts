@@ -4,10 +4,13 @@ import { ButtonTypeValue, ElementParams, WinnerFull } from '../../../../types';
 import ElementCreator from '../../../utils/element-creator';
 import appStorage from '../../../data/app-storage';
 import ImageCarView from '../../imageCar/imageCarView';
+import ButtonView from '../../button/buttonView';
 
 const CssClasses = {
   WINNERS: 'winners',
   WINNERS_HEADER: 'winners__header',
+  WINNERS_PAGE: 'winners__page',
+  WINNERS_BUTTON: 'winners__button',
   NOT_ACTIVE: 'not-active',
   TABLE: 'table',
   TABLE_HEADER: 'table__header',
@@ -20,6 +23,7 @@ const CssClasses = {
 };
 
 const TEXT_HEADER = 'Winners';
+const TEXT_PAGE = 'Page #';
 const TEXT_HEADER_ITEM = {
   NUMBER: 'Number',
   IMG: 'Frog',
@@ -31,11 +35,17 @@ const TEXT_HEADER_ITEM = {
 export default class WinnersView extends View {
   private header: ElementCreator;
 
+  private page: ElementCreator;
+
   private table: ElementCreator;
 
   private tableHeader: ElementCreator;
 
   private tableBody: ElementCreator;
+
+  private prevButton: ButtonView;
+
+  private nextButton: ButtonView;
 
   constructor() {
     const params: ElementParams = {
@@ -45,6 +55,9 @@ export default class WinnersView extends View {
     super(params);
 
     this.header = this.createHeader();
+    this.page = this.createPage();
+    this.prevButton = this.createPrevButton();
+    this.nextButton = this.createNextButton();
     this.tableHeader = this.createTableHeader();
     this.tableBody = this.createTableBody();
     this.table = this.createTable();
@@ -72,8 +85,31 @@ export default class WinnersView extends View {
     this.header.setTextContent(`${TEXT_HEADER}(${appStorage.getTotalWinners()})`);
   }
 
+  public setPage(): void {
+    const page = appStorage.getCurrentWinnersPage();
+    this.page.setTextContent(`${TEXT_PAGE}${page}`);
+  }
+
+  public getPrevButton(): ButtonView {
+    return this.prevButton;
+  }
+
+  public getNextButton(): ButtonView {
+    return this.nextButton;
+  }
+
   private configureView(): void {
     this.elementCreator.addInnerElement(this.header);
+    const params: ElementParams = {
+      tag: 'div',
+      classesName: ['winners__nav'],
+    };
+    const navCreator = new ElementCreator(params);
+    navCreator.addInnerElement(this.prevButton.getHTMLElement());
+    navCreator.addInnerElement(this.page);
+    navCreator.addInnerElement(this.nextButton.getHTMLElement());
+
+    this.elementCreator.addInnerElement(navCreator);
     this.elementCreator.addInnerElement(this.table);
   }
 
@@ -85,6 +121,24 @@ export default class WinnersView extends View {
     };
     const creatorHeader = new ElementCreator(paramsHeader);
     return creatorHeader;
+  }
+
+  private createPage(): ElementCreator {
+    const paramsPage: ElementParams = {
+      tag: 'p',
+      classesName: [CssClasses.WINNERS_PAGE],
+      textContent: `${TEXT_PAGE}${appStorage.getCurrentWinnersPage()}`,
+    };
+    const creatorPage = new ElementCreator(paramsPage);
+    return creatorPage;
+  }
+
+  private createPrevButton(): ButtonView {
+    return new ButtonView(CssClasses.WINNERS_BUTTON, 'prev', 'prev');
+  }
+
+  private createNextButton(): ButtonView {
+    return new ButtonView(CssClasses.WINNERS_BUTTON, 'next', 'next');
   }
 
   private renderWinnerRow(winner: WinnerFull): ElementCreator {
