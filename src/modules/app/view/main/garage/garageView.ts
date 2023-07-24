@@ -31,6 +31,12 @@ export default class GarageView extends View {
 
   private headerCreator: ElementCreator | null;
 
+  private buttonPrev: ButtonView | null = null;
+
+  private buttonNext: ButtonView | null = null;
+
+  private page: ElementCreator | null = null;
+
   constructor(controlView: ControlView) {
     const params: ElementParams = {
       tag: 'article',
@@ -64,6 +70,19 @@ export default class GarageView extends View {
 
   public setHeader(): void {
     this.headerCreator?.setTextContent(`${TEXT_HEADER}(${appStorage.getTotalsCars()})`);
+  }
+
+  public setPage(): void {
+    const page = appStorage.getCurrentCarsPage();
+    this.page?.setTextContent(`Page #${page}`);
+  }
+
+  public getButtonPrev(): ButtonView | null {
+    return this.buttonPrev;
+  }
+
+  public getButtonNext(): ButtonView | null {
+    return this.buttonNext;
   }
 
   private configureView(): void {
@@ -109,6 +128,7 @@ export default class GarageView extends View {
       textContent: TEXT_PAGE,
     };
     const creatorPage = new ElementCreator(paramsPage);
+    this.page = creatorPage;
     return creatorPage;
   }
 
@@ -120,7 +140,8 @@ export default class GarageView extends View {
     const creatorPagination = new ElementCreator(paramsPagination);
     const creatorButtonPrev = new ButtonView(CssClasses.RACE_PAGINATION_ITEM, TEXT_PAGINATION.PREV, 'prev');
     const creatorButtonNext = new ButtonView(CssClasses.RACE_PAGINATION_ITEM, TEXT_PAGINATION.NEXT, 'next');
-
+    this.buttonPrev = creatorButtonPrev;
+    this.buttonNext = creatorButtonNext;
     creatorPagination.addInnerElement(creatorButtonPrev.getHTMLElement());
     creatorPagination.addInnerElement(creatorButtonNext.getHTMLElement());
 

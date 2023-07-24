@@ -12,8 +12,6 @@ const CssClasses = {
   CAR_BUTTON: 'members__button',
   CAR_NAME: 'members__name',
   CAR_TRACK: 'members__track',
-  // MEMBERS_TRACK_NAV: 'members__track-nav',
-  // MEMBERS_TRACK_BUTTON: 'members__track-button',
   CAR_IMG: 'members__img',
 };
 

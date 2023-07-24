@@ -28,6 +28,10 @@ export enum EventType {
   RASE,
   RESET,
   WIN,
+  PREV_CARS,
+  NEXT_CARS,
+  PREV_WINS,
+  NEXT_WINS,
 }
 
 export const eventEmitter: {

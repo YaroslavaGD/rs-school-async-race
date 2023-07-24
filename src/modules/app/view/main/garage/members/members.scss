@@ -11,6 +11,7 @@
 
   &__item {
     position: relative;
+    margin-bottom: 1rem;
   }
 
   &__name {
@@ -20,6 +21,7 @@
     left: 0;
     margin: 0;
     font-size: 2rem;
+    opacity: 0.6;
     transform: translateY(-50%);
   }
 

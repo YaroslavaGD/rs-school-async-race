@@ -30,34 +30,21 @@ export default class CarController {
     const buttons = this.carView.getButtons();
 
     buttons[CarButtons.SELECT].getCreator().setCallback(() => {
-      console.log('select');
       eventEmitter.emit(EventType.SELECT, this.carView.getId());
     });
 
     buttons[CarButtons.REMOVE].getCreator().setCallback(() => {
-      console.log('remove');
       appStorage.setTotalsCars(appStorage.getTotalsCars() - 1);
       eventEmitter.emit(EventType.REMOVE, this.carView.getId());
     });
 
     buttons[CarButtons.DRIVE].getCreator().setCallback(() => {
-      console.log('drive-mode');
-      // buttons[CarButtons.DRIVE].setDisabled(true);
-      // buttons[CarButtons.STOP].setDisabled(false);
-      // eventEmitter.emit(EventType.REQUEST_VELOCITY, this.carView.getId());
       this.setDriveMode();
     });
 
     buttons[CarButtons.STOP].getCreator().setCallback(() => {
-      console.log('stop');
-      // buttons[CarButtons.DRIVE].setDisabled(false);
-      // buttons[CarButtons.STOP].setDisabled(true);
-      // eventEmitter.emit(EventType.REQUEST_STOP, this.carView.getId());
       this.setStopMode();
     });
-
-    // eventEmitter.subscribe(EventType.RASE, this.setDriveMode.bind(this));
-    // eventEmitter.subscribe(EventType.RESET, this.setStopMode.bind(this));
   }
 
   public async setDriveMode(): Promise<void> {

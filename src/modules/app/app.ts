@@ -106,6 +106,8 @@ export default class App {
     eventEmitter.subscribe(EventType.REQUEST_VELOCITY, this.setEngineData.bind(this));
     eventEmitter.subscribe(EventType.REQUEST_STOP, this.stopDriveCar.bind(this));
     eventEmitter.subscribe(EventType.RASE, this.startRace.bind(this));
+    eventEmitter.subscribe(EventType.PREV_CARS, this.prevCarPage.bind(this));
+    eventEmitter.subscribe(EventType.NEXT_CARS, this.nextCarPage.bind(this));
   }
 
   private startRace(): void {
@@ -137,7 +139,6 @@ export default class App {
       const newCar = appStorage.getNewCar();
       await this.apiController.createCar(newCar.name, newCar.color);
       this.loadCars();
-      // appStorage.setCar(car);
     } catch (error) {
       // console.log(error);
     }
@@ -166,7 +167,6 @@ export default class App {
         try {
           await this.apiController.removeCar(id);
           await this.loadCars();
-          // appStorage.removeCar(carStorageId);
         } catch (error) {
           // console.log(error);
         }
@@ -250,8 +250,8 @@ export default class App {
 
         if (!this.isWinner) {
           this.isWinner = true;
-          console.log('winner');
-          console.log(carsStorageId);
+          // console.log('winner');
+          // console.log(carsStorageId);
           const responseTime = (endTime - startTime) / 1000;
           console.log('Response Time for Winner (s):', responseTime);
           await this.setWinner(carsStorageId, responseTime);
@@ -305,6 +305,24 @@ export default class App {
           console.log(error);
         }
       }
+    }
+  }
+
+  private async prevCarPage(): Promise<void> {
+    const page = appStorage.getCurrentCarsPage();
+    if (page > 1) {
+      appStorage.setCurrentCarsPage(page - 1);
+      this.loadCars();
+    }
+  }
+
+  private async nextCarPage(): Promise<void> {
+    const page = appStorage.getCurrentCarsPage();
+    const totalPages = Math.floor(appStorage.getTotalsCars() / 7);
+
+    if (page < totalPages) {
+      appStorage.setCurrentCarsPage(page + 1);
+      this.loadCars();
     }
   }
 }
