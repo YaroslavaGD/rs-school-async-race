@@ -25,6 +25,8 @@ export enum EventType {
   ENGINE_READY,
   CAR_BROKEN,
   CAR_STOP,
+  RASE,
+  RESET,
 }
 
 export const eventEmitter: {

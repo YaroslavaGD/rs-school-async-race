@@ -41,9 +41,21 @@ export default class MembersController {
     eventEmitter.subscribe(EventType.CARS_CHANGE, this.updateCars.bind(this));
     eventEmitter.subscribe(EventType.CAR_CHANGE, this.updateCar.bind(this));
     eventEmitter.subscribe(EventType.NEW_CAR_CHANGE, this.createNewCar.bind(this));
+
     eventEmitter.subscribe(EventType.ENGINE_READY, this.driveCar.bind(this));
     eventEmitter.subscribe(EventType.CAR_BROKEN, this.brokeCar.bind(this));
     eventEmitter.subscribe(EventType.CAR_STOP, this.stopCar.bind(this));
+
+    eventEmitter.subscribe(EventType.RASE, this.driveCars.bind(this));
+    eventEmitter.subscribe(EventType.RESET, this.resetCars.bind(this));
+  }
+
+  private async driveCars(): Promise<void> {
+    Promise.race(this.carsController.map((car) => car.setDriveMode()));
+  }
+
+  private async resetCars(): Promise<void> {
+    Promise.all(this.carsController.map((car) => car.setStopMode()));
   }
 
   private driveCar(carId?: number): void {

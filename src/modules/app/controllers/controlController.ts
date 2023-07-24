@@ -53,6 +53,8 @@ export default class ControlController {
     this.addEventListenerCreate();
     this.addEventListenerUpdate();
     this.addEventListenerGenerate();
+    this.addEventListenerRace();
+    this.addEventListenerReset();
     eventEmitter.subscribe(EventType.SELECTED_CAR_ID_CHANGE, this.setOldCar.bind(this));
   }
 
@@ -91,6 +93,20 @@ export default class ControlController {
         appStorage.setNewCar(updatedCar);
         eventEmitter.emit(EventType.UPDATE, id);
       }
+    });
+  }
+
+  private addEventListenerRace(): void {
+    console.log('RACE');
+    this.buttons[ControlButtons.Race].getCreator().setCallback(() => {
+      eventEmitter.emit(EventType.RASE);
+    });
+  }
+
+  private addEventListenerReset(): void {
+    console.log('RESET');
+    this.buttons[ControlButtons.Reset].getCreator().setCallback(() => {
+      eventEmitter.emit(EventType.RESET);
     });
   }
 

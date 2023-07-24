@@ -76,12 +76,13 @@ export default class CarView extends View {
     if (this.carImageView) {
       this.carImageView.setActive();
       const imageHtml = this.carImageView.getCreator().getElement();
-      const distance = appStorage.getCurrentDistance() - 70;
+      const distance = appStorage.getCurrentDistance() - 50;
       const velocity = this.carData.engine?.velocity;
       const actualDistance = this.carData.engine?.distance;
       console.log('animation distance');
       console.log(distance);
       if (velocity !== undefined && actualDistance !== undefined) {
+        imageHtml.style.transform = 'translate(0) rotate(0deg)';
         const animation = imageHtml.animate(
           [{ transform: 'translate(0) rotate(0deg)' }, { transform: `translate(${distance}px) rotate(359deg)` }],
           {
@@ -114,7 +115,8 @@ export default class CarView extends View {
       this.carImageView.setStop();
       const imageHtml = this.carImageView.getCreator().getElement();
 
-      imageHtml.getAnimations({ subtree: true }).map((animation) => animation.cancel());
+      Promise.all(imageHtml.getAnimations({ subtree: true }).map((animation) => animation.cancel()));
+      imageHtml.style.transform = 'translate(0) rotate(0deg)';
     }
   }
 
